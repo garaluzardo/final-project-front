@@ -1,0 +1,67 @@
+/* Contenedor principal */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  /* Margen para la barra de desplazamiento */
+  body {
+    margin-right: calc(-1 * (100vw - 100%)); /* Compensa el espacio de la barra de desplazamiento */
+    overflow-x: hidden; /* Evita el desplazamiento horizontal */
+  }
+  
+  /* Botones y enlaces */
+  nav button {
+    background-color: transparent;
+    border: none;
+    color: #3b82f6;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    transition: background-color 0.2s, color 0.2s;
+  }
+  
+  nav button:hover {
+    background-color: #3b82f6;
+    color: #ffffff;
+  }
+  
+  /* Botón de Logout */
+  nav button[onClick] {
+    background-color: #ef4444;
+    color: #ffffff;
+  }
+  
+  nav button[onClick]:hover {
+    background-color: #dc2626;
+  }
+  
+  /* Nombre del usuario (cuando lo implemente) */
+  nav span {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #1f2937;
+    margin-left: 1rem;
+  }
+  
+  /* Estilo enlaces */
+  nav a {
+    text-decoration: none;
+  }
+  
+  /* Estilo imagen de perfil (cuando la implemente) */
+  nav img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-left: 1rem;
+  }
