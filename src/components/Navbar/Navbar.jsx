@@ -37,6 +37,10 @@ function Navbar() {
             {" "}
             <button>Login</button>{" "}
           </Link>
+          <Link to="/access">
+            {" "}
+            <button>Access here!</button>{" "}
+          </Link>
         </>
       )}
     </nav>
