@@ -51,7 +51,7 @@ const Signin = () => {
       <h1>Inicia sesión</h1>
       <input type="email" placeholder="Email" />
       <input type="password" placeholder="Contraseña" />
-      <a href="#">¿Olvidaste tu contraseña?</a>
+      <a href="/reset-password">¿Olvidaste tu contraseña?</a>
       <button className="button-access">Entra</button>
     </form>
   );
