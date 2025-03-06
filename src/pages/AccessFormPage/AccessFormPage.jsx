@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './AccessFormPage.css';
 
-const AuthForm = () => {
+const AccessFormPage = () => {
   const [isSignUp, setIsSignUp] = useState(false);
 
   const toggleForm = () => {
@@ -9,6 +9,13 @@ const AuthForm = () => {
   };
 
   return (
+    <div className="AccessFormPage">
+
+<video autoPlay loop muted className="background-video" src="/videos/puppies.mp4"></video>
+
+
+    <h1>PET PAL</h1>
+
     <div className={`container ${isSignUp ? 'right-panel-active' : ''}`}>
       <div className="form-container sign-up-container">
         <Signup />
@@ -20,17 +27,20 @@ const AuthForm = () => {
         <Overlay toggleForm={toggleForm} />
       </div>
     </div>
+    {/* <img className="Perrito" src="/images/perrito.gif" alt="Dog gif" /> */}
+
+    </div>
   );
 };
 
 const Signup = () => {
   return (
     <form action="">
-      <h1>Create Account</h1>
-      <input type="text" placeholder="Name" />
+      <h1>Crea tu cuenta</h1>
+      <input type="text" placeholder="Nombre de usuario" />
       <input type="email" placeholder="Email" />
-      <input type="password" placeholder="Password" />
-      <button>Sign Up</button>
+      <input type="password" placeholder="Contraseña" />
+      <button className="button-access" >Regístrate</button>
     </form>
   );
 };
@@ -38,11 +48,11 @@ const Signup = () => {
 const Signin = () => {
   return (
     <form action="">
-      <h1>Sign In</h1>
+      <h1>Inicia sesión</h1>
       <input type="email" placeholder="Email" />
-      <input type="password" placeholder="Password" />
-      <a href="#">Forgot your password?</a>
-      <button>Sign In</button>
+      <input type="password" placeholder="Contraseña" />
+      <a href="#">¿Olvidaste tu contraseña?</a>
+      <button className="button-access">Entra</button>
     </form>
   );
 };
@@ -51,17 +61,17 @@ const Overlay = ({ toggleForm }) => {
   return (
     <div className="overlay">
       <div className="overlay-panel overlay-left">
-        <h1>Already have an account?</h1>
-        <p>Login to access your dashboard and experience the power of the web.</p>
-        <button className="ghost" onClick={toggleForm}>Sign In</button>
+        <h1>¿Ya tienes una cuenta?</h1>
+        <p>Inicia sesión para acceder a PetPal y disfrutar de todas las funcionalidades.</p>
+        <button className="button-ghost" onClick={toggleForm}>Entra</button>
       </div>
       <div className="overlay-panel overlay-right">
-        <h1>Don't have an account?</h1>
-        <p>Create an account and let's begin a new journey</p>
-        <button className="ghost" onClick={toggleForm}>Sign Up</button>
+        <h1>¿Aún no tienes cuenta?</h1>
+        <p>Regístrate ahora y comienza una nueva experiencia.</p>
+        <button className="button-ghost" onClick={toggleForm}>Regístrate</button>
       </div>
     </div>
   );
 };
 
-export default AuthForm;
+export default AccessFormPage;
