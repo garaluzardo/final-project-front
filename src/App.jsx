@@ -3,9 +3,8 @@ import { Routes, Route } from "react-router-dom";
 
 import HomePage from "./pages/HomePage/HomePage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
-import SignupPage from "./pages/SignupPage/SignupPage";
-import LoginPage from "./pages/LoginPage/LoginPage";
 import AccessFormPage from "./pages/AccessFormPage/AccessFormPage";
+import TestLoginPage from "./pages/TestLoginPage";
 
 import Navbar from "./components/Navbar/Navbar";
 import IsPrivate from "./components/IsPrivate/IsPrivate";
@@ -29,22 +28,6 @@ function App() {
         />
 
         <Route
-          path="/signup"
-          element={
-            <IsAnon>
-              <SignupPage />
-            </IsAnon>
-          }
-        />
-        <Route
-          path="/login"
-          element={
-            <IsAnon>
-              <LoginPage />
-            </IsAnon>
-          }
-        />
-        <Route
           path="/access"
           element={
             <IsAnon>
@@ -52,6 +35,9 @@ function App() {
             </IsAnon>
           }
         />
+
+<Route path="/test-login" element={<TestLoginPage />} />
+
       </Routes>
     </div>
   );

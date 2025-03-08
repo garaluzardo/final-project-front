@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { AuthContext } from "../../context/auth.context";
+import { useNavigate } from "react-router-dom";
+import authService from "../../services/auth.service";
 import './AccessFormPage.css';
 
 const AccessFormPage = () => {
@@ -10,49 +13,141 @@ const AccessFormPage = () => {
 
   return (
     <div className="AccessFormPage">
-
-<video autoPlay loop muted className="background-video" src="/videos/puppies.mp4"></video>
-
-
-    <h1>PET PAL</h1>
-
-    <div className={`container ${isSignUp ? 'right-panel-active' : ''}`}>
-      <div className="form-container sign-up-container">
-        <Signup />
+      <video autoPlay loop muted className="background-video" src="/videos/puppies.mp4"></video>
+      <h1>PET PAL</h1>
+      <div className={`container ${isSignUp ? 'right-panel-active' : ''}`}>
+        <div className="form-container sign-up-container">
+          <Signup toggleForm={toggleForm} />
+        </div>
+        <div className="form-container sign-in-container">
+          <Signin />
+        </div>
+        <div className="overlay-container">
+          <Overlay toggleForm={toggleForm} />
+        </div>
       </div>
-      <div className="form-container sign-in-container">
-        <Signin />
-      </div>
-      <div className="overlay-container">
-        <Overlay toggleForm={toggleForm} />
-      </div>
-    </div>
-    {/* <img className="Perrito" src="/images/perrito.gif" alt="Dog gif" /> */}
-
     </div>
   );
 };
 
-const Signup = () => {
+const Signup = ({ toggleForm }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [errorMessage, setErrorMessage] = useState(undefined);
+  
+  const navigate = useNavigate();
+
+  const handleEmail = (e) => setEmail(e.target.value);
+  const handlePassword = (e) => setPassword(e.target.value);
+  const handleName = (e) => setName(e.target.value);
+
+  const handleSignupSubmit = (e) => {
+    e.preventDefault();
+    // Create an object representing the request body
+    const requestBody = { email, password, name };
+
+    // Use the authService to register the user
+    authService
+      .signup(requestBody)
+      .then((response) => {
+        // Si el registro es exitoso, cambia al formulario de login
+        toggleForm();
+      })
+      .catch((error) => {
+        // Si hay un error, muestra el mensaje
+        const errorDescription = error.response?.data?.message || "Error al registrar";
+        setErrorMessage(errorDescription);
+      });
+  };
+
   return (
-    <form action="">
+    <form onSubmit={handleSignupSubmit}>
       <h1>Crea tu cuenta</h1>
-      <input type="text" placeholder="Nombre de usuario" />
-      <input type="email" placeholder="Email" />
-      <input type="password" placeholder="Contraseña" />
-      <button className="button-access" >Regístrate</button>
+      <input 
+        type="text" 
+        name="name" 
+        value={name}
+        placeholder="Nombre de usuario" 
+        onChange={handleName} 
+      />
+      <input 
+        type="email" 
+        name="email" 
+        value={email}
+        placeholder="Email" 
+        onChange={handleEmail} 
+      />
+      <input 
+        type="password" 
+        name="password" 
+        value={password}
+        placeholder="Contraseña" 
+        onChange={handlePassword} 
+      />
+      <button type="submit" className="button-access">Regístrate</button>
+      
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
     </form>
   );
 };
 
 const Signin = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState(undefined);
+  
+  const navigate = useNavigate();
+  const { storeToken, authenticateUser } = useContext(AuthContext);
+
+  const handleEmail = (e) => setEmail(e.target.value);
+  const handlePassword = (e) => setPassword(e.target.value);
+
+  const handleLoginSubmit = (e) => {
+    e.preventDefault();
+    const requestBody = { email, password };
+
+    // Use the authService to login
+    authService
+      .login(requestBody)
+      .then((response) => {
+        // Store the token in the localStorage
+        storeToken(response.data.authToken);
+        
+        // Verify the token and update state variables
+        authenticateUser();
+        
+        // Redirect to the home page
+        navigate("/");
+      })
+      .catch((error) => {
+        // Si hay un error, muestra el mensaje
+        const errorDescription = error.response?.data?.message || "Error al iniciar sesión";
+        setErrorMessage(errorDescription);
+      });
+  };
+
   return (
-    <form action="">
+    <form onSubmit={handleLoginSubmit}>
       <h1>Inicia sesión</h1>
-      <input type="email" placeholder="Email" />
-      <input type="password" placeholder="Contraseña" />
+      <input 
+        type="email" 
+        name="email" 
+        value={email}
+        placeholder="Email" 
+        onChange={handleEmail} 
+      />
+      <input 
+        type="password" 
+        name="password" 
+        value={password}
+        placeholder="Contraseña" 
+        onChange={handlePassword} 
+      />
       <a href="/reset-password">¿Olvidaste tu contraseña?</a>
-      <button className="button-access">Entra</button>
+      <button type="submit" className="button-access">Entra</button>
+      
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
     </form>
   );
 };
