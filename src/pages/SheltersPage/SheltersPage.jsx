@@ -1,3 +1,5 @@
+import SheltersList from "../../components/SheltersList/SheltersList";
+
 function SheltersPage() {
   return (
     <div>
@@ -32,6 +34,7 @@ function SheltersPage() {
           cuál visitar
         </li>
       </ul>
+      <SheltersList />
     </div>
   );
 }

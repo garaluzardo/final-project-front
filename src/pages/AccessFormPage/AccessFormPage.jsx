@@ -33,17 +33,17 @@ const AccessFormPage = () => {
 const Signup = ({ toggleForm }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+  const [handle, setHandle] = useState("");
   const [errorMessage, setErrorMessage] = useState(undefined);
   
   const handleEmail = (e) => setEmail(e.target.value);
   const handlePassword = (e) => setPassword(e.target.value);
-  const handleName = (e) => setName(e.target.value);
+  const handleHandleChange = (e) => setHandle(e.target.value);
 
   const handleSignupSubmit = (e) => {
     e.preventDefault();
     // Create an object representing the request body
-    const requestBody = { email, password, name };
+    const requestBody = { email, password, handle };
 
     // Use the authService to register the user
     authService
@@ -64,10 +64,10 @@ const Signup = ({ toggleForm }) => {
       <h1>Crea tu cuenta</h1>
       <input 
         type="text" 
-        name="name" 
-        value={name}
-        placeholder="Nombre de usuario" 
-        onChange={handleName} 
+        name="handle" 
+        value={handle}
+        placeholder="Usuario" 
+        onChange={handleHandleChange} 
       />
       <input 
         type="email" 
