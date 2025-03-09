@@ -14,6 +14,10 @@ function Navbar() {
         <button>Home</button>
       </Link>
 
+      <Link to="/shelters">
+        <button>Protectoras</button>
+      </Link>
+
       {isLoggedIn && (
         <>
           <button onClick={logOutUser}>Logout</button>
@@ -23,23 +27,19 @@ function Navbar() {
             {/* <img src="https://picsum.photos/id/402/200/300" style={{ width: 50, height: 50, borderRadius: 25}} alt="profile" /> */}
           </Link>
 
+          <Link to="/create-shelter">
+          <button>Create Shelter</button>
+          </Link>
+
           <span>{user && user.name}</span>
         </>
       )}
 
       {!isLoggedIn && (
         <>
-          <Link to="/signup">
-            {" "}
-            <button>Sign Up</button>{" "}
-          </Link>
-          <Link to="/login">
-            {" "}
-            <button>Login</button>{" "}
-          </Link>
           <Link to="/access">
             {" "}
-            <button>Access here!</button>{" "}
+            <button>Entrar</button>{" "}
           </Link>
         </>
       )}

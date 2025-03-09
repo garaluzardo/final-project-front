@@ -1,11 +1,15 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 
+// Importar páginas
 import HomePage from "./pages/HomePage/HomePage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import AccessFormPage from "./pages/AccessFormPage/AccessFormPage";
-import TestLoginPage from "./pages/TestLoginPage";
+import SheltersPage from "./pages/SheltersPage/SheltersPage";
+import ShelterProfilePage from "./pages/ShelterProfilePage/ShelterProfilePage";
+import CreateShelterPage from "./pages/CreateShelterPage/CreateShelterPage";
 
+//Importar componentes
 import Navbar from "./components/Navbar/Navbar";
 import IsPrivate from "./components/IsPrivate/IsPrivate";
 import IsAnon from "./components/IsAnon/IsAnon";
@@ -17,7 +21,8 @@ function App() {
 
       <Routes>
         <Route path="/" element={<HomePage />} />
-
+        <Route path="/shelters" element={<SheltersPage />} />
+        <Route path="/shelters/:shelterHandle/*" element={<ShelterProfilePage />} />
         <Route
           path="/profile"
           element={
@@ -36,8 +41,14 @@ function App() {
           }
         />
 
-<Route path="/test-login" element={<TestLoginPage />} />
-
+        <Route
+          path="/create-shelter"
+          element={
+            <IsPrivate>
+              <CreateShelterPage />
+            </IsPrivate>
+          }
+        />
       </Routes>
     </div>
   );
