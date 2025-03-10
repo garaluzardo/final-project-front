@@ -22,14 +22,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/shelters" element={<SheltersPage />} />
-        <Route path="/shelters/:shelterHandle/*" element={<ShelterProfilePage />} />
-        <Route
-          path="/profile"
-          element={
-            <IsPrivate>
-              <ProfilePage />
-            </IsPrivate>
-          }
+        <Route path="/shelters/:shelterHandle/*" element={<ShelterProfilePage />}
         />
 
         <Route
@@ -49,6 +42,28 @@ function App() {
             </IsPrivate>
           }
         />
+
+        {/* Rutas para perfil de usuario */}
+        {/* Ruta alternativa /profile que redirige al perfil con handle */}
+        <Route
+          path="/profile"
+          element={
+            <IsPrivate>
+              <ProfilePage />
+            </IsPrivate>
+          }
+        />
+
+        {/* Ruta para ver perfiles de usuario por handle (incluido el propio) */}
+        <Route
+          path="/:userHandle"
+          element={
+            <IsPrivate>
+              <ProfilePage />
+            </IsPrivate>
+          }
+        />
+
       </Routes>
     </div>
   );
