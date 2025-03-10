@@ -115,7 +115,7 @@ function ShelterProfilePage() {
                 {user && (
                   <div className="shelter-actions">
                     {isAdmin ? (
-                      <Link to={`/protectoras/${shelter.handle}/edit`} className="edit-button">
+                      <Link to={`/shelters/${shelter.handle}/edit`} className="edit-button">
                         Editar protectora
                       </Link>
                     ) : (
@@ -139,7 +139,7 @@ function ShelterProfilePage() {
           
           <div className="shelter-stats">
             <Link 
-              to={`/protectoras/${shelter.handle}/admins`} 
+              to={`/shelters/${shelter.handle}/admins`} 
               className={`stat-box ${activeTab === 'admins' ? 'active' : ''}`}
             >
               <span className="stat-number">{shelter.admins?.length || 0}</span>
@@ -147,7 +147,7 @@ function ShelterProfilePage() {
             </Link>
             
             <Link 
-              to={`/protectoras/${shelter.handle}/voluntarios`} 
+              to={`/shelters/${shelter.handle}/voluntarios`} 
               className={`stat-box ${activeTab === 'voluntarios' ? 'active' : ''}`}
             >
               <span className="stat-number">{shelter.volunteers?.length || 0}</span>
@@ -155,7 +155,7 @@ function ShelterProfilePage() {
             </Link>
             
             <Link 
-              to={`/protectoras/${shelter.handle}/animales`} 
+              to={`/shelters/${shelter.handle}/animales`} 
               className={`stat-box ${activeTab === 'animales' ? 'active' : ''}`}
             >
               <span className="stat-number">{shelter.animals?.length || 0}</span>
@@ -163,7 +163,7 @@ function ShelterProfilePage() {
             </Link>
             
             <Link 
-              to={`/protectoras/${shelter.handle}`} 
+              to={`/shelters/${shelter.handle}`} 
               className={`stat-box ${activeTab === 'tareas' ? 'active' : ''}`}
             >
               <span className="stat-number">{shelter.tasks?.length || 0}</span>

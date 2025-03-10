@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from "../../context/auth.context";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import authService from "../../services/auth.service";
 import './AccessFormPage.css';
 
@@ -14,7 +14,9 @@ const AccessFormPage = () => {
   return (
     <div className="AccessFormPage">
       <video autoPlay loop muted className="background-video" src="/videos/puppies.mp4"></video>
+       <Link to="/" className="title-link" style={{ textDecoration: 'none' }} >
       <h1>PET PAL</h1>
+      </Link>
       <div className={`container ${isSignUp ? 'right-panel-active' : ''}`}>
         <div className="form-container sign-up-container">
           <Signup toggleForm={toggleForm} />
