@@ -33,17 +33,7 @@ function App() {
         <Route path="/home" element={<IsPrivate> <HomePage /> </IsPrivate>} />
         <Route path="/create-shelter" element={ <IsPrivate> <CreateShelterPage /> </IsPrivate> } />
 
-        {/* Rutas para perfil de usuario */}
-          {/* Ruta alternativa /profile que redirige al perfil con handle */}
-          <Route
-            path="/profile"
-            element={
-              <IsPrivate>
-                <ProfilePage />
-              </IsPrivate>
-            }
-          />
-
+        {/* Rutas dinámicas */}
           {/* Ruta para ver perfiles de usuario por handle (incluido el propio) */}
           <Route
             path="/:userHandle"

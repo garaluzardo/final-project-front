@@ -27,12 +27,10 @@ function ProfilePage() {
 
     // Determinar si estamos viendo nuestro propio perfil
     let targetHandle = userHandle;
-    let isViewingSelf = false;
 
     // Si no hay handle en la URL o si el handle coincide con el del usuario actual
     if (!targetHandle || (user && targetHandle === user.handle)) {
       targetHandle = user.handle;
-      isViewingSelf = true;
       setIsOwnProfile(true);
     }
 
