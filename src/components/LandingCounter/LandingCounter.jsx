@@ -1,18 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import "./LandingCounter.css"
+import statsService from '../../services/stats.service';
+import "./LandingCounter.css";
 
 const LandingCounter = () => {
-  // Definimos los contadores iniciales
-  const [voluntarios, setVoluntarios] = useState(156);
-  const [protectoras, setProtectoras] = useState(42);
+  // Estados para los contadores
+  const [voluntarios, setVoluntarios] = useState(0);
+  const [protectoras, setProtectoras] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Simulamos incrementos aleatorios en los contadores
+  // Cargar datos reales del backend
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (Math.random() > 0.7) setVoluntarios(prev => prev + 1);
-      if (Math.random() > 0.8) setProtectoras(prev => prev + 1);
-    }, 3000);
+    const fetchStats = async () => {
+      try {
+        const stats = await statsService.getGeneralStats();
+        setVoluntarios(stats.usersCount || 0);
+        setProtectoras(stats.sheltersCount || 0);
+      } catch (error) {
+        console.error("Error al cargar estadísticas:", error);
+        // Establecer valores predeterminados en caso de error
+        setVoluntarios(0);
+        setProtectoras(0);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
+    fetchStats();
+
+    // Actualizar cada 60 segundos en principio, pendiente buscar la manera de que solo se actualice cuando exista un cambio en el back)
+    const interval = setInterval(fetchStats, 60000);
+    
     return () => clearInterval(interval);
   }, []);
 
@@ -20,6 +37,17 @@ const LandingCounter = () => {
   const getDigits = (number) => {
     return number.toString().split('').map(Number);
   };
+
+  // Mostrar un loader mientras se cargan los datos
+  if (isLoading) {
+    return (
+      <div className="w-full bg-gradient-to-r from-blue-600 to-purple-600 py-6">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <p className="text-white">Cargando estadísticas...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full bg-gradient-to-r from-blue-600 to-purple-600 py-6">

@@ -1,0 +1,67 @@
+/* Estilos para los contadores */
+.countdown {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    text-align: center;
+  }
+  
+  /* Estilo para el gradiente de fondo */
+  .bg-gradient-to-r {
+    background: linear-gradient(90deg, #6c5ce7 0%, #a29bfe 100%);
+  }
+  
+  /* Animaciones para los números */
+  @keyframes countUp {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  .countdown span {
+    animation: countUp 0.5s ease-out;
+  }
+  
+  /* Estilo para el texto de estadísticas */
+  .text-lg {
+    font-size: 1.125rem;
+  }
+  
+  /* Estilos responsivos */
+  @media (max-width: 640px) {
+    .flex-row {
+      flex-direction: column;
+      gap: 2rem;
+    }
+    
+    .countdown {
+      width: 32px;
+    }
+    
+    .text-lg {
+      font-size: 1rem;
+    }
+  }
+  
+  /* Estilo para el indicador de carga */
+  .loading-indicator {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s linear infinite;
+    margin-right: 8px;
+  }
+  
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }

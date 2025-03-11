@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom';
 import './LandingPage.css';
 import LandingCounter from '../../components/LandingCounter/LandingCounter';
 import LandingCarousel from '../../components/LandingCarousel/LandingCarousel';
+import LandingBubbles from '../../components/LandingBubbles/LandingBubbles';
 
 const LandingPage = () => {
   return (
     <div className="landing-container">
+    
       <div className="landing-content">
         {/* El carrusel se coloca dentro del contenido como fondo */}
         <LandingCarousel />
@@ -45,8 +47,22 @@ const LandingPage = () => {
         <hr />
       </div>
       <hr />
+       {/* Nueva sección con burbujas flotantes */}
+       <section className="explore-section">
+        <h2>Descubre protectoras increíbles</h2>
+        <p>Conéctate con refugios de animales y marca la diferencia en tu comunidad</p>
+        
+        {/* Componente de burbujas flotantes */}
+        <LandingBubbles />
+        
+        <Link to="/shelters" className="explore-button">
+          Explora las protectoras disponibles
+        </Link>
+      </section>
+      <hr />
       <LandingCounter />
       <hr />
+
       <footer className="landing-footer">
         <p>© {new Date().getFullYear()} PETPAL - Todos los derechos reservados</p>
       </footer>
