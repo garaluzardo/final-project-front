@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import shelterService from '../../services/shelter.service';
 import './LandingBubbles.css';
@@ -10,110 +10,7 @@ const LandingBubbles = () => {
   const bubblesRef = useRef([]);
   const animationRef = useRef(null);
   
-  // Estado para las posiciones y velocidades de las burbujas
-  const [bubblePositions, setBubblePositions] = useState([]);
-
-  useEffect(() => {
-    const fetchShelters = async () => {
-      try {
-        const response = await shelterService.getAllShelters();
-        // Tomar hasta 7 protectoras para mostrar
-        const shownShelters = response.data.slice(0, 7);
-        setShelters(shownShelters);
-        setIsLoading(false);
-        
-        // Inicializar posiciones si hay protectoras
-        if (shownShelters.length > 0) {
-          initializeBubblePositions(shownShelters.length);
-        }
-      } catch (error) {
-        console.error("Error obteniendo protectoras:", error);
-        setIsLoading(false);
-      }
-    };
-
-    fetchShelters();
-    
-    // Limpieza al desmontar el componente
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-    };
-  }, []);
-
-  // Inicializa las posiciones de las burbujas de forma que no se superpongan
-  const initializeBubblePositions = (count) => {
-    if (!containerRef.current) return;
-    
-    const containerWidth = containerRef.current.clientWidth;
-    const containerHeight = containerRef.current.clientHeight;
-    
-    const newPositions = [];
-    const sizes = ['small', 'medium', 'large'];
-    const bubbleSizes = {
-      small: 50,
-      medium: 70,
-      large: 90
-    };
-    
-    // Función para verificar si una nueva posición colisiona con existentes
-    const checkCollision = (x, y, size) => {
-      const radius = bubbleSizes[size] / 2;
-      
-      for (const pos of newPositions) {
-        const otherRadius = bubbleSizes[pos.size] / 2;
-        const minDistance = radius + otherRadius + 10; // 10px extra de margen
-        
-        const dx = x - pos.x;
-        const dy = y - pos.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        
-        if (distance < minDistance) {
-          return true; // Hay colisión
-        }
-      }
-      
-      return false; // No hay colisión
-    };
-    
-    // Crear posiciones para cada burbuja
-    for (let i = 0; i < count; i++) {
-      const size = sizes[i % sizes.length];
-      const radius = bubbleSizes[size] / 2;
-      
-      // Intentar encontrar una posición sin colisiones
-      let attempts = 0;
-      let x, y;
-      
-      do {
-        // Posición aleatoria dentro de los límites del contenedor
-        x = radius + Math.random() * (containerWidth - 2 * radius);
-        y = radius + Math.random() * (containerHeight - 2 * radius);
-        attempts++;
-      } while (checkCollision(x, y, size) && attempts < 100);
-      
-      // Velocidad aleatoria REALMENTE lenta
-      const speedFactor = 0.15; // Factor muy bajo para velocidad inicial
-      const vx = (Math.random() * 2 - 1) * speedFactor;
-      const vy = (Math.random() * 2 - 1) * speedFactor;
-      
-      newPositions.push({
-        x,
-        y,
-        vx,
-        vy,
-        size,
-        radius,
-        lastCollision: 0 // Timestamp de la última colisión
-      });
-    }
-    
-    setBubblePositions(newPositions);
-    
-    // Iniciar la animación
-    animateBubbles(newPositions);
-  };
+  // Eliminamos la variable bubblePositions no utilizada
   
   // Limita la velocidad a un valor máximo
   const limitSpeed = (vx, vy) => {
@@ -131,8 +28,8 @@ const LandingBubbles = () => {
     return { vx, vy };
   };
   
-  // Anima las burbujas
-  const animateBubbles = (positions) => {
+  // Anima las burbujas - convertido a useCallback para usarlo como dependencia
+  const animateBubbles = useCallback((positions) => {
     if (!containerRef.current) return;
     
     const containerWidth = containerRef.current.clientWidth;
@@ -272,7 +169,107 @@ const LandingBubbles = () => {
     };
     
     animationRef.current = requestAnimationFrame(animate);
-  };
+  }, []);
+
+  // Inicializa las posiciones de las burbujas - convertido a useCallback
+  const initializeBubblePositions = useCallback((count) => {
+    if (!containerRef.current) return;
+    
+    const containerWidth = containerRef.current.clientWidth;
+    const containerHeight = containerRef.current.clientHeight;
+    
+    const newPositions = [];
+    const sizes = ['small', 'medium', 'large'];
+    const bubbleSizes = {
+      small: 50,
+      medium: 70,
+      large: 90
+    };
+    
+    // Función para verificar si una nueva posición colisiona con existentes
+    const checkCollision = (x, y, size) => {
+      const radius = bubbleSizes[size] / 2;
+      
+      for (const pos of newPositions) {
+        const otherRadius = bubbleSizes[pos.size] / 2;
+        const minDistance = radius + otherRadius + 10; // 10px extra de margen
+        
+        const dx = x - pos.x;
+        const dy = y - pos.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        if (distance < minDistance) {
+          return true; // Hay colisión
+        }
+      }
+      
+      return false; // No hay colisión
+    };
+    
+    // Crear posiciones para cada burbuja
+    for (let i = 0; i < count; i++) {
+      const size = sizes[i % sizes.length];
+      const radius = bubbleSizes[size] / 2;
+      
+      // Intentar encontrar una posición sin colisiones
+      let attempts = 0;
+      let x, y;
+      
+      do {
+        // Posición aleatoria dentro de los límites del contenedor
+        x = radius + Math.random() * (containerWidth - 2 * radius);
+        y = radius + Math.random() * (containerHeight - 2 * radius);
+        attempts++;
+      } while (checkCollision(x, y, size) && attempts < 100);
+      
+      // Velocidad aleatoria REALMENTE lenta
+      const speedFactor = 0.15; // Factor muy bajo para velocidad inicial
+      const vx = (Math.random() * 2 - 1) * speedFactor;
+      const vy = (Math.random() * 2 - 1) * speedFactor;
+      
+      newPositions.push({
+        x,
+        y,
+        vx,
+        vy,
+        size,
+        radius,
+        lastCollision: 0 // Timestamp de la última colisión
+      });
+    }
+    
+    // Iniciar la animación
+    animateBubbles(newPositions);
+  }, [animateBubbles]);
+
+  useEffect(() => {
+    const fetchShelters = async () => {
+      try {
+        const response = await shelterService.getAllShelters();
+        // Tomar hasta 7 protectoras para mostrar
+        const shownShelters = response.data.slice(0, 7);
+        setShelters(shownShelters);
+        setIsLoading(false);
+        
+        // Inicializar posiciones si hay protectoras
+        if (shownShelters.length > 0) {
+          initializeBubblePositions(shownShelters.length);
+        }
+      } catch (error) {
+        console.error("Error obteniendo protectoras:", error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchShelters();
+    
+    // Limpieza al desmontar el componente
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [initializeBubblePositions]); // Añadida la dependencia faltante
 
   // Si no hay protectoras, no mostrar el componente de burbujas
   if (!isLoading && shelters.length === 0) {
