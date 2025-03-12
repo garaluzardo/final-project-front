@@ -31,7 +31,7 @@ function Navbar() {
     <nav className="navbar">
       {/* Sección izquierda - Logo y nombre de la app */}
       <div className="left-section">
-        <Link to="/" className="logo-container">
+        <Link to="/home" className="logo-container">
           <img src={LogoBN} alt="Logo" className="logo-bn" />
           <img src={LogoColor} alt="Logo" className="logo-color" />
         </Link>

@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../context/auth.context";
 import { useParams, Link, Navigate } from "react-router-dom";
-import axios from "axios";
+import userService from "../../services/user.service";
 import "./ProfilePage.css";
+import EditProfileForm from "../../components/EditProfileForm/EditProfileForm";
 
 function ProfilePage() {
   const { userHandle } = useParams(); // Obtener el handle de la URL si existe
@@ -15,8 +16,9 @@ function ProfilePage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isOwnProfile, setIsOwnProfile] = useState(false);
-
-  const API_URL = process.env.REACT_APP_SERVER_URL || "http://localhost:5005";
+  const [activeTab, setActiveTab] = useState("tasks"); // "tasks", "adminShelters", "memberShelters"
+  const [showProfileImage, setShowProfileImage] = useState(false);
+  const [showEditForm, setShowEditForm] = useState(false);
 
   useEffect(() => {
     // Si no está autenticado, no hacer nada (la redirección se maneja abajo)
@@ -35,8 +37,7 @@ function ProfilePage() {
     }
 
     // Buscar el perfil por handle
-    axios
-      .get(`${API_URL}/api/users/handle/${targetHandle}`)
+    userService.getUserByHandle(targetHandle)
       .then((response) => {
         setProfile(response.data);
         
@@ -44,8 +45,7 @@ function ProfilePage() {
         const userId = response.data._id;
         
         // Cargar tareas completadas
-        axios
-          .get(`${API_URL}/api/users/${userId}/completed-tasks`)
+        userService.getCompletedTasks(userId)
           .then((response) => {
             setCompletedTasks(response.data);
           })
@@ -54,8 +54,7 @@ function ProfilePage() {
           });
 
         // Cargar protectoras a las que pertenece
-        axios
-          .get(`${API_URL}/api/users/${userId}/joined-shelters`)
+        userService.getJoinedShelters(userId)
           .then((response) => {
             setJoinedShelters(response.data);
           })
@@ -64,8 +63,7 @@ function ProfilePage() {
           });
 
         // Cargar protectoras que administra
-        axios
-          .get(`${API_URL}/api/users/${userId}/owned-shelters`)
+        userService.getOwnedShelters(userId)
           .then((response) => {
             setOwnedShelters(response.data);
             setIsLoading(false);
@@ -80,7 +78,58 @@ function ProfilePage() {
         setError("Usuario no encontrado");
         setIsLoading(false);
       });
-  }, [isLoggedIn, user, userHandle, API_URL]);
+  }, [isLoggedIn, user, userHandle]);
+
+  // Función para formatear la fecha de creación
+  const formatJoinDate = (dateString) => {
+    const date = new Date(dateString);
+    const months = [
+      "enero", "febrero", "marzo", "abril", "mayo", "junio",
+      "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
+    ];
+    return `Se unió en ${months[date.getMonth()]} del ${date.getFullYear()}`;
+  };
+
+  // Función para formatear la ubicación del usuario
+  const formatLocation = (location) => {
+    if (!location) return null;
+    
+    const parts = [];
+    if (location.city) parts.push(location.city);
+    if (location.municipality) parts.push(location.municipality);
+    if (location.province) parts.push(location.province);
+    if (location.island) parts.push(location.island);
+    
+    return parts.length > 0 ? parts.join(', ') : null;
+  };
+
+  // Función para agrupar tareas por protectora
+  const groupTasksByShelter = () => {
+    const grouped = {};
+    
+    completedTasks.forEach(task => {
+      const shelterName = task.shelter?.name || "Sin protectora";
+      const shelterId = task.shelter?._id || "unknown";
+      const shelterHandle = task.shelter?.handle || "";
+      
+      if (!grouped[shelterId]) {
+        grouped[shelterId] = {
+          name: shelterName,
+          handle: shelterHandle,
+          tasks: []
+        };
+      }
+      
+      grouped[shelterId].tasks.push(task);
+    });
+    
+    return grouped;
+  };
+
+  // Manejar la actualización del perfil después de editar
+  const handleProfileUpdate = (updatedProfile) => {
+    setProfile(updatedProfile);
+  };
 
   // Si no está autenticado, redirigir a login
   if (!isLoggedIn) {
@@ -106,7 +155,7 @@ function ProfilePage() {
       <div className="profile-error">
         <h2>{error}</h2>
         <p>No se pudo encontrar el perfil solicitado.</p>
-        <Link to="/" className="btn-home">
+        <Link to="/home" className="btn-home">
           Volver al inicio
         </Link>
       </div>
@@ -115,199 +164,274 @@ function ProfilePage() {
 
   return (
     <div className="profile-container">
-      <div className="profile-header">
-        <div className="profile-avatar">
-          {profile?.profilePicture ? (
-            <img src={profile.profilePicture} alt={`${profile.name}'s avatar`} />
-          ) : (
-            <div className="default-avatar">
-              {profile?.name ? profile.name.charAt(0).toUpperCase() : 
-               profile?.handle ? profile.handle.charAt(0).toUpperCase() : "U"}
-            </div>
-          )}
+      {/* Overlay para imagen de perfil ampliada */}
+      {showProfileImage && (
+        <div 
+          className="profile-image-overlay"
+          onClick={() => setShowProfileImage(false)}
+        >
+          <div className="profile-image-large">
+            {profile?.profilePicture ? (
+              <img src={profile.profilePicture} alt={`${profile.name}'s avatar`} />
+            ) : (
+              <div className="default-avatar-large">
+                {profile?.name ? profile.name.charAt(0).toUpperCase() : 
+                 profile?.handle ? profile.handle.charAt(0).toUpperCase() : "U"}
+              </div>
+            )}
+          </div>
         </div>
+      )}
 
-        <div className="profile-info">
-          {/* Título y botones de acción */}
-          <div className="profile-title-actions">
-            <div>
-              <h1>{profile?.name || `@${profile?.handle}`}</h1>
-              <p className="profile-handle">@{profile?.handle}</p>
+      {/* Overlay para formulario de edición */}
+      {showEditForm && (
+        <EditProfileForm
+          profile={profile}
+          onClose={() => setShowEditForm(false)}
+          onUpdate={handleProfileUpdate}
+        />
+      )}
+      
+      <div className="profile-content">
+        {/* Sección 1: Cabecera */}
+        <div className="profile-header">
+          <div className="header-top">
+            <div 
+              className="profile-avatar"
+              onClick={() => setShowProfileImage(true)}
+            >
+              {profile?.profilePicture ? (
+                <img src={profile.profilePicture} alt={`${profile.name}'s avatar`} />
+              ) : (
+                <div className="default-avatar">
+                  {profile?.name ? profile.name.charAt(0).toUpperCase() : 
+                   profile?.handle ? profile.handle.charAt(0).toUpperCase() : "U"}
+                </div>
+              )}
             </div>
             
-            {/* Mostrar botón de editar perfil solo si es mi perfil */}
+            {/* Botón de editar perfil */}
             {isOwnProfile && (
-              <Link to="/profile/edit" className="edit-profile-button">
-                Editar Perfil
-              </Link>
-            )}
-          </div>
-          
-          <p className="profile-bio">
-            {profile?.bio || "Este usuario aún no ha añadido una biografía."}
-          </p>
-          
-          {profile?.location && (
-            <p className="profile-location">
-              <span role="img" aria-label="location">📍</span> {profile.location}
-            </p>
-          )}
-          
-          <p className="profile-joined">
-            <span role="img" aria-label="calendar">📅</span> Se unió el {new Date(profile?.createdAt).toLocaleDateString()}
-          </p>
-        </div>
-      </div>
-
-      {/* Sección estadísticas */}
-      <div className="profile-stats">
-        <div className="stat-box">
-          <span className="stat-number">{completedTasks.length}</span>
-          <span className="stat-label">Tareas completadas</span>
-        </div>
-        <div className="stat-box">
-          <span className="stat-number">{joinedShelters.length}</span>
-          <span className="stat-label">Protectoras</span>
-        </div>
-        <div className="stat-box">
-          <span className="stat-number">{ownedShelters.length}</span>
-          <span className="stat-label">Administrando</span>
-        </div>
-      </div>
-
-      {/* Sección de protectoras que administra */}
-      <div className="section-container">
-        <h2>
-          {isOwnProfile 
-            ? "Protectoras que administras" 
-            : `Protectoras que administra ${profile?.name || profile?.handle}`}
-        </h2>
-        {ownedShelters.length === 0 ? (
-          <div className="empty-state">
-            <p>
-              {isOwnProfile 
-                ? "Aún no administras ninguna protectora." 
-                : "Este usuario aún no administra ninguna protectora."}
-            </p>
-            {isOwnProfile && (
-              <Link to="/create-shelter" className="create-button">
-                Crear una protectora
-              </Link>
-            )}
-          </div>
-        ) : (
-          <div className="shelters-grid">
-            {ownedShelters.map((shelter) => (
-              <Link 
-                to={`/shelters/${shelter.handle}`} 
-                key={shelter._id} 
-                className="shelter-card"
+              <button 
+                className="edit-profile-button"
+                onClick={() => setShowEditForm(true)}
               >
-                <div className="shelter-image">
-                  {shelter.imageUrl ? (
-                    <img src={shelter.imageUrl} alt={shelter.name} />
-                  ) : (
-                    <div className="default-shelter-image">
-                      {shelter.name.charAt(0).toUpperCase()}
-                    </div>
-                  )}
-                </div>
-                <h3>{shelter.name}</h3>
-                <p className="shelter-location">{shelter.location}</p>
-                <p className="shelter-description">{shelter.bio || shelter.description}</p>
-                <div className="shelter-stats">
-                  <span>{shelter.volunteers?.length || shelter.members?.length || 0} miembros</span>
-                  <span>{shelter.animals?.length || 0} animales</span>
-                </div>
-                <div className="admin-badge">Administrador</div>
-              </Link>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Sección de protectoras a las que pertenece */}
-      <div className="section-container">
-        <h2>
-          {isOwnProfile 
-            ? "Protectoras a las que perteneces" 
-            : `Protectoras a las que pertenece ${profile?.name || profile?.handle}`}
-        </h2>
-        {joinedShelters.length === 0 ? (
-          <div className="empty-state">
-            <p>
-              {isOwnProfile 
-                ? "Aún no perteneces a ninguna protectora." 
-                : "Este usuario aún no pertenece a ninguna protectora."}
-            </p>
-            {isOwnProfile && (
-              <Link to="/shelters" className="explore-button">
-                Explorar protectoras
-              </Link>
+                Editar perfil
+              </button>
             )}
           </div>
-        ) : (
-          <div className="shelters-grid">
-            {joinedShelters.map((shelter) => (
-              <Link 
-                to={`/shelters/${shelter.handle}`} 
-                key={shelter._id} 
-                className="shelter-card"
-              >
-                <div className="shelter-image">
-                  {shelter.imageUrl ? (
-                    <img src={shelter.imageUrl} alt={shelter.name} />
-                  ) : (
-                    <div className="default-shelter-image">
-                      {shelter.name.charAt(0).toUpperCase()}
-                    </div>
-                  )}
-                </div>
-                <h3>{shelter.name}</h3>
-                <p className="shelter-location">{shelter.location}</p>
-                <p className="shelter-description">{shelter.bio || shelter.description}</p>
-                <div className="shelter-stats">
-                  <span>{shelter.volunteers?.length || shelter.members?.length || 0} miembros</span>
-                  <span>{shelter.animals?.length || 0} animales</span>
-                </div>
-                <div className="member-badge">Miembro</div>
-              </Link>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Sección de tareas completadas */}
-      <div className="section-container">
-        <h2>
-          {isOwnProfile 
-            ? "Tareas completadas" 
-            : `Tareas completadas por ${profile?.name || profile?.handle}`}
-        </h2>
-        {completedTasks.length === 0 ? (
-          <div className="empty-state">
-            <p>
-              {isOwnProfile 
-                ? "Aún no has completado ninguna tarea." 
-                : "Este usuario aún no ha completado ninguna tarea."}
+          
+          {/* Datos del usuario */}
+          <div className="profile-info">
+            {profile?.name && <h1 className="profile-name">{profile.name}</h1>}
+            <p className="profile-handle">@{profile?.handle}</p>
+            
+            {profile?.bio && (
+              <p className="profile-bio">{profile.bio}</p>
+            )}
+            
+            {/* Mostrar ubicación si existe */}
+            {formatLocation(profile?.location) && (
+              <p className="profile-location">
+                <span role="img" aria-label="location">📍</span> {formatLocation(profile.location)}
+              </p>
+            )}
+            
+            {/* Fecha de ingreso */}
+            <p className="profile-joined">
+              <span role="img" aria-label="calendar">📅</span> {formatJoinDate(profile?.createdAt)}
             </p>
           </div>
-        ) : (
-          <div className="tasks-grid">
-            {completedTasks.map((task) => (
-              <div key={task._id} className="task-card">
-                <h3>{task.title}</h3>
-                <p>{task.description}</p>
-                <div className="task-meta">
-                  <span className="task-date">
-                    {new Date(task.completedAt).toLocaleDateString()}
-                  </span>
-                  <span className="task-shelter">{task.shelter?.name}</span>
-                </div>
+        </div>
+        
+        {/* Sección 2: Pestañas y contenido */}
+        <div className="profile-tabs-container">
+          <div className="profile-tabs">
+            <button 
+              className={`tab-button ${activeTab === "tasks" ? "active" : ""}`}
+              onClick={() => setActiveTab("tasks")}
+            >
+              Tareas <span className="tab-count">{completedTasks.length}</span>
+            </button>
+            
+            <button 
+              className={`tab-button ${activeTab === "adminShelters" ? "active" : ""}`}
+              onClick={() => setActiveTab("adminShelters")}
+            >
+              Protectoras que administra <span className="tab-count">{ownedShelters.length}</span>
+            </button>
+            
+            <button 
+              className={`tab-button ${activeTab === "memberShelters" ? "active" : ""}`}
+              onClick={() => setActiveTab("memberShelters")}
+            >
+              Protectoras en las que ayuda <span className="tab-count">{joinedShelters.length}</span>
+            </button>
+          </div>
+          
+          <div className="profile-tab-content">
+            {/* Contenido Tab: Tareas */}
+            {activeTab === "tasks" && (
+              <div className="tasks-content">
+                {completedTasks.length === 0 ? (
+                  <div className="empty-content">
+                    <p>
+                      {isOwnProfile 
+                        ? "Aún no has completado ninguna tarea." 
+                        : `${profile?.name || profile?.handle} aún no ha completado ninguna tarea.`}
+                    </p>
+                  </div>
+                ) : (
+                  <div className="tasks-by-shelter">
+                    {Object.entries(groupTasksByShelter()).map(([shelterId, shelter]) => (
+                      <div key={shelterId} className="shelter-tasks-group">
+                        <h3 className="shelter-name">
+                          {shelter.handle ? (
+                            <Link to={`/shelters/${shelter.handle}`}>{shelter.name}</Link>
+                          ) : (
+                            shelter.name
+                          )}
+                        </h3>
+                        
+                        <div className="tasks-list">
+                          {shelter.tasks.map((task) => (
+                            <div key={task._id} className="task-item">
+                              <h4 className="task-title">{task.title}</h4>
+                              <p className="task-description">{task.description}</p>
+                              <div className="task-meta">
+                                <span className="task-date">
+                                  {new Date(task.completedAt).toLocaleDateString()}
+                                </span>
+                                {task.priority && (
+                                  <span className={`task-priority ${task.priority}`}>
+                                    {task.priority}
+                                  </span>
+                                )}
+                                {task.category && (
+                                  <span className="task-category">{task.category}</span>
+                                )}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
-            ))}
+            )}
+            
+            {/* Contenido Tab: Protectoras que administra */}
+            {activeTab === "adminShelters" && (
+              <div className="shelters-content">
+                {ownedShelters.length === 0 ? (
+                  <div className="empty-content">
+                    <p>
+                      {isOwnProfile 
+                        ? "Aún no administras ninguna protectora." 
+                        : `${profile?.name || profile?.handle} aún no administra ninguna protectora.`}
+                    </p>
+                    {isOwnProfile && (
+                      <Link to="/create-shelter" className="create-button">
+                        Crear una protectora
+                      </Link>
+                    )}
+                  </div>
+                ) : (
+                  <div className="shelters-grid">
+                    {ownedShelters.map((shelter) => (
+                      <Link 
+                        to={`/shelters/${shelter.handle}`} 
+                        key={shelter._id} 
+                        className="shelter-card"
+                      >
+                        <div className="shelter-image">
+                          {shelter.imageUrl ? (
+                            <img src={shelter.imageUrl} alt={shelter.name} />
+                          ) : (
+                            <div className="default-shelter-image">
+                              {shelter.name.charAt(0).toUpperCase()}
+                            </div>
+                          )}
+                        </div>
+                        <div className="shelter-card-content">
+                          <h3 className="shelter-title">{shelter.name}</h3>
+                          
+                          {/* Usar el nuevo formato de ubicación */}
+                          {formatLocation(shelter.location) && (
+                            <p className="shelter-location">{formatLocation(shelter.location)}</p>
+                          )}
+                          
+                          <p className="shelter-description">{shelter.bio || shelter.description}</p>
+                          <div className="shelter-stats">
+                            <span>{shelter.volunteers?.length || shelter.members?.length || 0} miembros</span>
+                            <span>{shelter.animals?.length || 0} animales</span>
+                          </div>
+                          <div className="admin-badge">Administrador</div>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+            
+            {/* Contenido Tab: Protectoras en las que ayuda */}
+            {activeTab === "memberShelters" && (
+              <div className="shelters-content">
+                {joinedShelters.length === 0 ? (
+                  <div className="empty-content">
+                    <p>
+                      {isOwnProfile 
+                        ? "Aún no perteneces a ninguna protectora como voluntario." 
+                        : `${profile?.name || profile?.handle} aún no pertenece a ninguna protectora como voluntario.`}
+                    </p>
+                    {isOwnProfile && (
+                      <Link to="/shelters" className="explore-button">
+                        Explorar protectoras
+                      </Link>
+                    )}
+                  </div>
+                ) : (
+                  <div className="shelters-grid">
+                    {joinedShelters.map((shelter) => (
+                      <Link 
+                        to={`/shelters/${shelter.handle}`} 
+                        key={shelter._id} 
+                        className="shelter-card"
+                      >
+                        <div className="shelter-image">
+                          {shelter.imageUrl ? (
+                            <img src={shelter.imageUrl} alt={shelter.name} />
+                          ) : (
+                            <div className="default-shelter-image">
+                              {shelter.name.charAt(0).toUpperCase()}
+                            </div>
+                          )}
+                        </div>
+                        <div className="shelter-card-content">
+                          <h3 className="shelter-title">{shelter.name}</h3>
+                          
+                          {/* Usar el nuevo formato de ubicación */}
+                          {formatLocation(shelter.location) && (
+                            <p className="shelter-location">{formatLocation(shelter.location)}</p>
+                          )}
+                          
+                          <p className="shelter-description">{shelter.bio || shelter.description}</p>
+                          <div className="shelter-stats">
+                            <span>{shelter.volunteers?.length || shelter.members?.length || 0} miembros</span>
+                            <span>{shelter.animals?.length || 0} animales</span>
+                          </div>
+                          <div className="member-badge">Voluntario</div>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
     </div>
   );

@@ -1,67 +1,120 @@
-/* Estilos para los contadores */
-.countdown {
-    position: relative;
-    display: inline-block;
-    width: 40px;
-    text-align: center;
+/* Estilos para LandingCounter */
+.counter-container {
+  width: 100%;
+  padding: 30px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.counter-wrapper {
+  width: 100%;
+  max-width: 900px;
+  padding: 0 20px;
+}
+
+.counter-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
+}
+
+.counter-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.counter-digits {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.counter-digit {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #CCB999;
+  min-width: 2ch;
+  text-align: center;
+  position: relative;
+  line-height: 1;
+  animation: countUp 0.5s ease-out;
+}
+
+.counter-label {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  color: #CCB999;
+  font-weight: 500;
+}
+
+/* Estado de carga */
+.counter-container.loading {
+  min-height: 150px;
+}
+
+.counter-loading {
+  padding: 20px;
+  text-align: center;
+  color: #CCB999;
+}
+
+/* Animación para los números al cargar */
+@keyframes countUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Estilo para los números parpadeantes al cambiar */
+.counter-digit.changing {
+  animation: blink 0.3s;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Media queries para dispositivos móviles */
+@media (max-width: 768px) {
+  .counter-row {
+    flex-direction: column;
+    gap: 30px;
   }
   
-  /* Estilo para el gradiente de fondo */
-  .bg-gradient-to-r {
-    background: linear-gradient(90deg, #6c5ce7 0%, #a29bfe 100%);
+  .counter-digit {
+    font-size: 3rem;
   }
   
-  /* Animaciones para los números */
-  @keyframes countUp {
-    from {
-      transform: translateY(20px);
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
+  .counter-label {
+    font-size: 1.1rem;
+  }
+}
+
+/* Media queries para dispositivos muy pequeños */
+@media (max-width: 480px) {
+  .counter-digit {
+    font-size: 2.5rem;
   }
   
-  .countdown span {
-    animation: countUp 0.5s ease-out;
+  .counter-label {
+    font-size: 1rem;
   }
-  
-  /* Estilo para el texto de estadísticas */
-  .text-lg {
-    font-size: 1.125rem;
-  }
-  
-  /* Estilos responsivos */
-  @media (max-width: 640px) {
-    .flex-row {
-      flex-direction: column;
-      gap: 2rem;
-    }
-    
-    .countdown {
-      width: 32px;
-    }
-    
-    .text-lg {
-      font-size: 1rem;
-    }
-  }
-  
-  /* Estilo para el indicador de carga */
-  .loading-indicator {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 3px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    border-top-color: white;
-    animation: spin 1s linear infinite;
-    margin-right: 8px;
-  }
-  
-  @keyframes spin {
-    to {
-      transform: rotate(360deg);
-    }
-  }
+}

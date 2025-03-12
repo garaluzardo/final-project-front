@@ -27,7 +27,7 @@ const LandingCounter = () => {
 
     fetchStats();
 
-    // Actualizar cada 60 segundos en principio, pendiente buscar la manera de que solo se actualice cuando exista un cambio en el back)
+    // Actualizar cada 60 segundos
     const interval = setInterval(fetchStats, 60000);
     
     return () => clearInterval(interval);
@@ -41,40 +41,40 @@ const LandingCounter = () => {
   // Mostrar un loader mientras se cargan los datos
   if (isLoading) {
     return (
-      <div className="w-full bg-gradient-to-r from-blue-600 to-purple-600 py-6">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <p className="text-white">Cargando estadísticas...</p>
+      <div className="counter-container loading">
+        <div className="counter-loading">
+          <p>Cargando estadísticas...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="w-full bg-gradient-to-r from-blue-600 to-purple-600 py-6">
-      <div className="max-w-4xl mx-auto px-4">
-        <div className="flex flex-row justify-center items-center gap-10">
+    <div className="counter-container">
+      <div className="counter-wrapper">
+        <div className="counter-row">
           {/* Voluntarios */}
-          <div className="flex flex-col items-center">
-            <div className="flex justify-center gap-1">
+          <div className="counter-column">
+            <div className="counter-digits">
               {getDigits(voluntarios).map((digit, index) => (
-                <span key={index} className="countdown font-mono text-4xl text-white">
-                  <span style={{"--value": digit}} aria-live="polite" aria-label={digit.toString()}>{digit}</span>
+                <span key={index} className="counter-digit">
+                  {digit}
                 </span>
               ))}
             </div>
-            <div className="text-lg text-white mt-2">Voluntarios Registrados</div>
+            <div className="counter-label">Voluntarios Registrados</div>
           </div>
           
           {/* Protectoras */}
-          <div className="flex flex-col items-center">
-            <div className="flex justify-center gap-1">
+          <div className="counter-column">
+            <div className="counter-digits">
               {getDigits(protectoras).map((digit, index) => (
-                <span key={index} className="countdown font-mono text-4xl text-white">
-                  <span style={{"--value": digit}} aria-live="polite" aria-label={digit.toString()}>{digit}</span>
+                <span key={index} className="counter-digit">
+                  {digit}
                 </span>
               ))}
             </div>
-            <div className="text-lg text-white mt-2">Protectoras Creadas</div>
+            <div className="counter-label">Protectoras Creadas</div>
           </div>
         </div>
       </div>

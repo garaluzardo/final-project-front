@@ -118,7 +118,7 @@ const Signin = () => {
         authenticateUser();
         
         // Redirect to the home page
-        navigate("/");
+        navigate("/home");
       })
       .catch((error) => {
         // Si hay un error, muestra el mensaje

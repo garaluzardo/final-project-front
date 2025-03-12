@@ -1,5 +1,7 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Importar páginas
 import LandingPage from "./pages/LandingPage/LandingPage";
@@ -9,6 +11,7 @@ import AccessFormPage from "./pages/AccessFormPage/AccessFormPage";
 import SheltersPage from "./pages/SheltersPage/SheltersPage";
 import ShelterProfilePage from "./pages/ShelterProfilePage/ShelterProfilePage";
 import CreateShelterPage from "./pages/CreateShelterPage/CreateShelterPage";
+import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 
 //Importar componentes
 import Navbar from "./components/Navbar/Navbar";
@@ -28,6 +31,7 @@ function App() {
         {/* Rutas visibles para usuarios anónimos y conectados */}
         <Route path="/shelters" element={<SheltersPage />} />
         <Route path="/shelters/:shelterHandle/*" element={<ShelterProfilePage />} />
+        <Route path="*" element={<NotFoundPage />} />
 
         {/* Rutas solo visibles para el usuario registrado y conectado */}
         <Route path="/home" element={<IsPrivate> <HomePage /> </IsPrivate>} />
@@ -45,6 +49,19 @@ function App() {
           />
 
       </Routes>
+
+      <ToastContainer 
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+
     </div>
   );
 }
