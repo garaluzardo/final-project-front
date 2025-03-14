@@ -1,11 +1,13 @@
-import './SheltersPage.css';
+import "./SheltersPage.css";
+import WorkingOnIt from "../../assets/images/work.gif";
 
-function SheltersPage() {  
-    return (
-        <div className="shelters-container">
-            <h1>Shelters Page</h1>
-        </div>
-    );
+function SheltersPage() {
+  return (
+    <div className="shelters-container">
+      
+      <img src={WorkingOnIt} className="workingonit" alt="working on it gif" />
+    </div>
+  );
 }
 
 export default SheltersPage;

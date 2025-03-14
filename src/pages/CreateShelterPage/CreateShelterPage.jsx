@@ -126,191 +126,193 @@ function CreateShelterPage() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto my-10 p-6 bg-white rounded-lg shadow-md">
-      <h1 className="text-2xl font-bold text-center mb-6">Crear una nueva protectora</h1>
-      
-      {errors.general && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-          {errors.general}
-        </div>
-      )}
-      
-      <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Información básica */}
-        <div className="space-y-4">
-          <h2 className="text-xl font-semibold border-b pb-2">Información básica</h2>
-          
-          <div>
-            <label className="block text-gray-700 mb-1">Nombre *</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className={`w-full px-3 py-2 border rounded-md ${errors.name ? 'border-red-500' : 'border-gray-300'}`}
-              placeholder="Nombre de la protectora"
-            />
-            {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+    <div className="flex justify-center min-h-screen w-full bg-[#854c48] py-10 px-5">
+      <div className="max-w-2xl w-full bg-[#dcd0c3]  rounded-[20px] shadow-md p-6 mb-10">
+        <h1 className="text-2xl font-bold text-center mb-6 text-[#59381B]">Crear una nueva protectora</h1>
+        
+        {errors.general && (
+          <div className="bg-[#8C3616]/10 border border-[#8C3616] text-[#8C3616] px-4 py-3 rounded-[20px] mb-4">
+            {errors.general}
           </div>
-          
-          <div>
-            <label className="block text-gray-700 mb-1">Handle * <span className="text-gray-500 text-sm">(identificador único para la URL)</span></label>
-            <div className="flex items-center">
-              <span className="bg-gray-100 border border-r-0 border-gray-300 rounded-l-md px-3 py-2">@</span>
+        )}
+        
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Información básica */}
+          <div className="space-y-4">
+            <h2 className="text-xl font-semibold text-[#868C79] border-b border-[#D9CDBF] pb-2">Información básica</h2>
+            
+            <div>
+              <label className="block text-[#3A3A38] mb-1">Nombre *</label>
               <input
                 type="text"
-                name="handle"
-                value={formData.handle}
+                name="name"
+                value={formData.name}
                 onChange={handleChange}
-                className={`flex-1 px-3 py-2 border rounded-r-md ${errors.handle ? 'border-red-500' : 'border-gray-300'}`}
-                placeholder="mi_protectora"
+                className={`w-full px-3 py-2 rounded-[20px] focus:ring-2 focus:ring-[#868C79]/20 focus:outline-none ${errors.name ? 'border-[#8C3616]' : 'border-[#D9CDBF]'} border bg-white text-black`}
+                placeholder="Nombre de la protectora"
+              />
+              {errors.name && <p className="text-[#8C3616] text-sm mt-1">{errors.name}</p>}
+            </div>
+            
+            <div>
+              <label className="block text-[#3A3A38] mb-1">Handle * <span className="text-[#77888C] text-sm">(identificador único para la URL)</span></label>
+              <div className="flex items-center">
+                <span className="bg-white border border-r-0 border-[#D9CDBF] rounded-l-[20px] px-3 py-2 text-[#3A3A38]">@</span>
+                <input
+                  type="text"
+                  name="handle"
+                  value={formData.handle}
+                  onChange={handleChange}
+                  className={`flex-1 px-3 py-2 border rounded-r-[20px] focus:ring-2 focus:ring-[#868C79]/20 focus:outline-none ${errors.handle ? 'border-[#8C3616]' : 'border-[#D9CDBF]'} bg-white text-black`}
+                  placeholder="mi_protectora"
+                />
+              </div>
+              {errors.handle && <p className="text-[#8C3616] text-sm mt-1">{errors.handle}</p>}
+              <p className="text-[#77888C] text-xs mt-1">Solo letras, números, puntos y guiones bajos. No se podrá cambiar después.</p>
+            </div>
+            
+            <div>
+              <label className="block text-[#3A3A38] mb-1">Descripción *</label>
+              <textarea
+                name="bio"
+                value={formData.bio}
+                onChange={handleChange}
+                rows="4"
+                className={`w-full px-3 py-2 border rounded-[20px] focus:ring-2 focus:ring-[#868C79]/20 focus:outline-none ${errors.bio ? 'border-[#8C3616]' : 'border-[#D9CDBF]'} bg-white text-black`}
+                placeholder="Describe tu protectora, su misión y objetivos..."
+              ></textarea>
+              {errors.bio && <p className="text-[#8C3616] text-sm mt-1">{errors.bio}</p>}
+            </div>
+            
+            <div>
+              <label className="block text-[#3A3A38] mb-1">Ubicación *</label>
+              <input
+                type="text"
+                name="location"
+                value={formData.location}
+                onChange={handleChange}
+                className={`w-full px-3 py-2 border rounded-[20px] focus:ring-2 focus:ring-[#868C79]/20 focus:outline-none ${errors.location ? 'border-[#8C3616]' : 'border-[#D9CDBF]'} bg-white text-black`}
+                placeholder="Ciudad, Provincia"
+              />
+              {errors.location && <p className="text-[#8C3616] text-sm mt-1">{errors.location}</p>}
+            </div>
+            
+            <div>
+              <label className="block text-[#3A3A38] mb-1">URL de imagen</label>
+              <input
+                type="text"
+                name="imageUrl"
+                value={formData.imageUrl}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-[#D9CDBF] rounded-[20px] focus:ring-2 focus:ring-[#868C79]/20 focus:outline-none bg-white text-black"
+                placeholder="https://ejemplo.com/imagen.jpg"
+              />
+              <p className="text-[#77888C] text-xs mt-1">URL de una imagen para mostrar como logo o foto de la protectora</p>
+            </div>
+          </div>
+          
+          {/* Información de contacto */}
+          <div className="space-y-4">
+            <h2 className="text-xl font-semibold text-[#868C79] border-b border-[#D9CDBF] pb-2">Información de contacto</h2>
+            
+            <div>
+              <label className="block text-[#3A3A38] mb-1">Email</label>
+              <input
+                type="email"
+                name="contact.email"
+                value={formData.contact.email}
+                onChange={handleChange}
+                className={`w-full px-3 py-2 border rounded-[20px] focus:ring-2 focus:ring-[#868C79]/20 focus:outline-none ${errors['contact.email'] ? 'border-[#8C3616]' : 'border-[#D9CDBF]'} bg-white text-black`}
+                placeholder="contacto@protectora.com"
+              />
+              {errors['contact.email'] && <p className="text-[#8C3616] text-sm mt-1">{errors['contact.email']}</p>}
+            </div>
+            
+            <div>
+              <label className="block text-[#3A3A38] mb-1">Teléfono</label>
+              <input
+                type="text"
+                name="contact.phone"
+                value={formData.contact.phone}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-[#D9CDBF] rounded-[20px] focus:ring-2 focus:ring-[#868C79]/20 focus:outline-none bg-white text-black"
+                placeholder="123456789"
               />
             </div>
-            {errors.handle && <p className="text-red-500 text-sm mt-1">{errors.handle}</p>}
-            <p className="text-gray-500 text-xs mt-1">Solo letras, números, puntos y guiones bajos. No se podrá cambiar después.</p>
+            
+            <div>
+              <label className="block text-[#3A3A38] mb-1">Sitio web</label>
+              <input
+                type="text"
+                name="contact.website"
+                value={formData.contact.website}
+                onChange={handleChange}
+                className={`w-full px-3 py-2 border rounded-[20px] focus:ring-2 focus:ring-[#868C79]/20 focus:outline-none ${errors['contact.website'] ? 'border-[#8C3616]' : 'border-[#D9CDBF]'} bg-white text-black`}
+                placeholder="https://www.tuprotectora.com"
+              />
+              {errors['contact.website'] && <p className="text-[#8C3616] text-sm mt-1">{errors['contact.website']}</p>}
+            </div>
           </div>
           
-          <div>
-            <label className="block text-gray-700 mb-1">Descripción *</label>
-            <textarea
-              name="bio"
-              value={formData.bio}
-              onChange={handleChange}
-              rows="4"
-              className={`w-full px-3 py-2 border rounded-md ${errors.bio ? 'border-red-500' : 'border-gray-300'}`}
-              placeholder="Describe tu protectora, su misión y objetivos..."
-            ></textarea>
-            {errors.bio && <p className="text-red-500 text-sm mt-1">{errors.bio}</p>}
+          {/* Redes sociales */}
+          <div className="space-y-4">
+            <h2 className="text-xl font-semibold text-[#868C79] border-b border-[#D9CDBF] pb-2">Redes sociales</h2>
+            
+            <div>
+              <label className="block text-[#3A3A38] mb-1">Facebook</label>
+              <input
+                type="text"
+                name="socialMedia.facebook"
+                value={formData.socialMedia.facebook}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-[#D9CDBF] rounded-[20px] focus:ring-2 focus:ring-[#868C79]/20 focus:outline-none bg-white text-black"
+                placeholder="https://facebook.com/tuprotectora"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-[#3A3A38] mb-1">Instagram</label>
+              <input
+                type="text"
+                name="socialMedia.instagram"
+                value={formData.socialMedia.instagram}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-[#D9CDBF] rounded-[20px] focus:ring-2 focus:ring-[#868C79]/20 focus:outline-none bg-white text-black"
+                placeholder="https://instagram.com/tuprotectora"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-[#3A3A38] mb-1">Twitter</label>
+              <input
+                type="text"
+                name="socialMedia.twitter"
+                value={formData.socialMedia.twitter}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-[#D9CDBF] rounded-[20px] focus:ring-2 focus:ring-[#868C79]/20 focus:outline-none bg-white text-black"
+                placeholder="https://twitter.com/tuprotectora"
+              />
+            </div>
           </div>
           
-          <div>
-            <label className="block text-gray-700 mb-1">Ubicación *</label>
-            <input
-              type="text"
-              name="location"
-              value={formData.location}
-              onChange={handleChange}
-              className={`w-full px-3 py-2 border rounded-md ${errors.location ? 'border-red-500' : 'border-gray-300'}`}
-              placeholder="Ciudad, Provincia"
-            />
-            {errors.location && <p className="text-red-500 text-sm mt-1">{errors.location}</p>}
+          <div className="flex justify-end space-x-3 pt-4 border-t border-[#D9CDBF]">
+            <button
+              type="button"
+              onClick={() => navigate(-1)}
+              className="px-4 py-2 bg-[#D9CDBF] text-[#59381B] rounded-[20px] hover:bg-[#cebfac] transition"
+            >
+              Cancelar
+            </button>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className={`px-4 py-2 bg-[#8C3616] text-white rounded-[20px] hover:bg-[#a03e1c] transition ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+            >
+              {isSubmitting ? 'Creando...' : 'Crear protectora'}
+            </button>
           </div>
-          
-          <div>
-            <label className="block text-gray-700 mb-1">URL de imagen</label>
-            <input
-              type="text"
-              name="imageUrl"
-              value={formData.imageUrl}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md"
-              placeholder="https://ejemplo.com/imagen.jpg"
-            />
-            <p className="text-gray-500 text-xs mt-1">URL de una imagen para mostrar como logo o foto de la protectora</p>
-          </div>
-        </div>
-        
-        {/* Información de contacto */}
-        <div className="space-y-4">
-          <h2 className="text-xl font-semibold border-b pb-2">Información de contacto</h2>
-          
-          <div>
-            <label className="block text-gray-700 mb-1">Email</label>
-            <input
-              type="email"
-              name="contact.email"
-              value={formData.contact.email}
-              onChange={handleChange}
-              className={`w-full px-3 py-2 border rounded-md ${errors['contact.email'] ? 'border-red-500' : 'border-gray-300'}`}
-              placeholder="contacto@protectora.com"
-            />
-            {errors['contact.email'] && <p className="text-red-500 text-sm mt-1">{errors['contact.email']}</p>}
-          </div>
-          
-          <div>
-            <label className="block text-gray-700 mb-1">Teléfono</label>
-            <input
-              type="text"
-              name="contact.phone"
-              value={formData.contact.phone}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md"
-              placeholder="123456789"
-            />
-          </div>
-          
-          <div>
-            <label className="block text-gray-700 mb-1">Sitio web</label>
-            <input
-              type="text"
-              name="contact.website"
-              value={formData.contact.website}
-              onChange={handleChange}
-              className={`w-full px-3 py-2 border rounded-md ${errors['contact.website'] ? 'border-red-500' : 'border-gray-300'}`}
-              placeholder="https://www.tuprotectora.com"
-            />
-            {errors['contact.website'] && <p className="text-red-500 text-sm mt-1">{errors['contact.website']}</p>}
-          </div>
-        </div>
-        
-        {/* Redes sociales */}
-        <div className="space-y-4">
-          <h2 className="text-xl font-semibold border-b pb-2">Redes sociales</h2>
-          
-          <div>
-            <label className="block text-gray-700 mb-1">Facebook</label>
-            <input
-              type="text"
-              name="socialMedia.facebook"
-              value={formData.socialMedia.facebook}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md"
-              placeholder="https://facebook.com/tuprotectora"
-            />
-          </div>
-          
-          <div>
-            <label className="block text-gray-700 mb-1">Instagram</label>
-            <input
-              type="text"
-              name="socialMedia.instagram"
-              value={formData.socialMedia.instagram}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md"
-              placeholder="https://instagram.com/tuprotectora"
-            />
-          </div>
-          
-          <div>
-            <label className="block text-gray-700 mb-1">Twitter</label>
-            <input
-              type="text"
-              name="socialMedia.twitter"
-              value={formData.socialMedia.twitter}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md"
-              placeholder="https://twitter.com/tuprotectora"
-            />
-          </div>
-        </div>
-        
-        <div className="flex justify-end space-x-3 pt-4 border-t">
-          <button
-            type="button"
-            onClick={() => navigate(-1)}
-            className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition"
-          >
-            Cancelar
-          </button>
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className={`px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
-          >
-            {isSubmitting ? 'Creando...' : 'Crear protectora'}
-          </button>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
 }

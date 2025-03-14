@@ -1,9 +1,11 @@
 import "./HomePage.css";
+import WorkingOnIt from "../../assets/images/work.gif";
 
 function HomePage() {
   return (
     <div className="home-container">
-      <h1>Home page</h1>
+      
+      <img src={WorkingOnIt} className="workingonit" alt="working on it gif" />
     </div>
   );
 }
