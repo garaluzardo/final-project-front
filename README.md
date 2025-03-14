@@ -8,10 +8,10 @@ El desarrollo del proyecto forma parte de un trabajo académico, y la idea surge
 
 La aplicación permite a los usuarios:
 - Crear y gestionar perfiles de protectoras de animales
-- Administrar listados de animales bajo su cuidado (futura implementaación).
+- Administrar listados de animales bajo su cuidado (futura implementación)
 - Coordinar tareas y voluntariados a través de un tablero de tareas
 - Unirse como voluntario a diferentes protectoras
-- Comunicarse con otros miembros y voluntarios (futura implementaación).
+- Comunicarse con otros miembros y voluntarios (futura implementación)
 
 ## Contenido
 
