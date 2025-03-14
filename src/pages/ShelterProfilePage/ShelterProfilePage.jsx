@@ -4,86 +4,12 @@ import { AuthContext } from '../../context/auth.context';
 import shelterService from '../../services/shelter.service';
 import './ShelterProfilePage.css';
 
-// Componentes que serán implementados más adelante
+// Componentes importados
 import Taskboard from '../../components/Taskboard/Taskboard';
 import AnimalsList from '../../components/AnimalsList/AnimalsList';
+import VolunteersList from '../../components/VolunteersList/VolunteersList';
+import Toast from '../../components/Toast/Toast';
 
-// Componente Toast para notificaciones
-const Toast = ({ message, type, onClose }) => {
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      onClose();
-    }, 5000);
-    
-    return () => clearTimeout(timer);
-  }, [onClose]);
-  
-  return (
-    <div className={`toast ${type}`}>
-      <p>{message}</p>
-      <button onClick={onClose}>×</button>
-    </div>
-  );
-};
-
-// Componente para la lista de voluntarios
-const VolunteersList = ({ shelter, isAdmin, onAdminChange }) => {
-  // Combinamos admins y voluntarios para la lista completa
-  const allVolunteers = [
-    ...shelter.admins.map(admin => ({ ...admin, isAdmin: true })),
-    ...shelter.volunteers.filter(vol => 
-      !shelter.admins.some(admin => admin._id === vol._id)
-    ).map(vol => ({ ...vol, isAdmin: false }))
-  ];
-
-  return (
-    <div className="volunteers-list">
-      <h2>Voluntarios ({allVolunteers.length})</h2>
-      
-      {allVolunteers.length === 0 ? (
-        <p className="empty-message">Esta protectora aún no tiene voluntarios.</p>
-      ) : (
-        <div className="volunteers-grid">
-          {allVolunteers.map((volunteer) => (
-            <div key={volunteer._id} className="volunteer-card">
-              <Link to={`/${volunteer.handle}`} className="volunteer-info">
-                <div className="volunteer-avatar">
-                  {volunteer.profilePicture ? (
-                    <img src={volunteer.profilePicture} alt={`${volunteer.name || volunteer.handle}`} />
-                  ) : (
-                    <div className="default-avatar">
-                      {volunteer.name ? volunteer.name.charAt(0).toUpperCase() : 
-                       volunteer.handle ? volunteer.handle.charAt(0).toUpperCase() : "U"}
-                    </div>
-                  )}
-                </div>
-                <div className="volunteer-details">
-                  <p className="volunteer-name">{volunteer.name || `@${volunteer.handle}`}</p>
-                  <p className="volunteer-handle">@{volunteer.handle}</p>
-                </div>
-              </Link>
-              
-              {isAdmin && volunteer._id !== shelter.admins[0]._id && (
-                <button 
-                  className={`admin-toggle-button ${volunteer.isAdmin ? 'remove' : 'add'}`}
-                  onClick={() => onAdminChange(volunteer._id, volunteer.isAdmin)}
-                >
-                  {volunteer.isAdmin ? 'Quitar admin' : 'Hacer admin'}
-                </button>
-              )}
-              
-              {volunteer.isAdmin && (
-                <span className="admin-badge">Admin</span>
-              )}
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-};
-
-// Componente principal
 function ShelterProfilePage() {
   const [shelter, setShelter] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -126,7 +52,7 @@ function ShelterProfilePage() {
     }
   }, [shelterHandle, user]);
 
-  // Formatear fecha
+  // Métodos de formateo (podrían extraerse a un utilidad)
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const months = [
@@ -136,7 +62,6 @@ function ShelterProfilePage() {
     return `Se unió en ${months[date.getMonth()]} del ${date.getFullYear()}`;
   };
   
-  // Formatear ubicación
   const formatLocation = (location) => {
     if (!location) return null;
     
@@ -151,7 +76,6 @@ function ShelterProfilePage() {
     return parts.length > 0 ? parts.join(', ') : null;
   };
   
-  // Formatear lista de administradores
   const formatAdminsList = (admins) => {
     if (!admins || admins.length === 0) return null;
     
@@ -188,7 +112,7 @@ function ShelterProfilePage() {
     );
   };
   
-  // Manejar unirse/abandonar la protectora
+  // Manejadores de acciones
   const handleJoinLeave = async () => {
     try {
       if (isMember) {
@@ -229,7 +153,6 @@ function ShelterProfilePage() {
     }
   };
   
-  // Manejar cambios de administrador
   const handleAdminChange = async (userId, isCurrentlyAdmin) => {
     try {
       if (isCurrentlyAdmin) {

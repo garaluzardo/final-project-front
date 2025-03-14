@@ -28,7 +28,7 @@ const LandingCounter = () => {
     fetchStats();
 
     // Actualizar cada 60 segundos
-    const interval = setInterval(fetchStats, 60000);
+    const interval = setInterval(fetchStats, 6000);
     
     return () => clearInterval(interval);
   }, []);
@@ -53,6 +53,7 @@ const LandingCounter = () => {
     <div className="counter-container">
       <div className="counter-wrapper">
         <div className="counter-row">
+
           {/* Voluntarios */}
           <div className="counter-column">
             <div className="counter-digits">
@@ -64,7 +65,7 @@ const LandingCounter = () => {
             </div>
             <div className="counter-label">Voluntarios Registrados</div>
           </div>
-          
+
           {/* Protectoras */}
           <div className="counter-column">
             <div className="counter-digits">

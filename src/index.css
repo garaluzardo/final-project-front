@@ -1,9 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,100..1000;1,100..1000&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+
+:root {
+  --font-primary: "DM Sans", sans-serif;
+  --font-secondary: "Rubik", sans-serif;
+}
 
 body {
   margin: 0;
-  font-family: 'Roboto', sans-serif;
+  font-family: var(--font-primary);
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
 }

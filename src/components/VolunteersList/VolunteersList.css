@@ -1,0 +1,85 @@
+/* VolunteersList.css */
+.volunteers-list {
+    width: 100%;
+  }
+  
+  .volunteers-list h2 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+  }
+  
+  .empty-message {
+    text-align: center;
+    color: #666;
+    padding: 20px;
+  }
+  
+  .volunteers-grid {
+    display: grid;
+    gap: 15px;
+  }
+  
+  .volunteer-card {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .volunteer-card:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .volunteer-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 15px;
+  }
+  
+  .volunteer-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .default-avatar {
+    width: 100%;
+    height: 100%;
+    background-color: #6c5ce7;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+  }
+  
+  .volunteer-details {
+    flex-grow: 1;
+    position: relative;
+  }
+  
+  .volunteer-name {
+    margin: 0;
+    font-weight: bold;
+  }
+  
+  .volunteer-handle {
+    margin: 0;
+    color: #666;
+  }
+  
+  .admin-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #2196F3;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+  }

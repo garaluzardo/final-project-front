@@ -8,7 +8,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
-  background-color: rgba(180, 195, 166, 0.4);
+  background-color: #854c483d;
   backdrop-filter: blur(5px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   z-index: 1000;
@@ -60,9 +60,10 @@
 }
 
 .title {
-  font-size: 1.7rem;
+  font-size: 2rem;
+  font-weight: 700;
+  font-family: var(--font-secondary);
   color: #000000;
-  text-transform: lowercase;
   margin-left: 5px;
 }
 
@@ -173,43 +174,4 @@
 
 .navbar-profile-item.logout:hover {
   background: rgba(231, 76, 60, 0.1);
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .navbar {
-    width: 80vw;
-    padding: 0 15px;
-    margin: 10px 15px;
-  }
-  
-  .title {
-    font-size: 1.4rem;
-  }
-  
-  .navbar-button {
-    padding: 8px 12px;
-    font-size: 14px;
-  }
-  
-  .navbar-profile-img {
-    width: 36px;
-    height: 36px;
-  }
-}
-
-/* For very small screens */
-@media (max-width: 480px) {
-  .navbar {
-    width: 90vw;
-  }
-  
-  .title {
-    display: none;
-  }
-  
-  .navbar-button {
-    padding: 8px 10px;
-    font-size: 13px;
-  }
 }

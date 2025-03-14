@@ -1,127 +1,103 @@
+/* Estilos minimalistas para las burbujas - LandingBubbles.css */
 .floating-shelters-container {
+  position: relative;
   width: 100%;
-  padding: 30px 0;
-  margin: 30px auto;
-  background-color: rgba(109, 116, 100, 0.1);
-  border-radius: 12px;
+  height: 200px;
 }
 
 .shelter-bubbles-row {
   display: flex;
   justify-content: center;
-  align-items: center;
   flex-wrap: wrap;
-  gap: 30px;
+  gap: 20px;
   padding: 20px;
 }
 
+/* Burbuja básica con animación */
 .shelter-bubble {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  overflow: hidden;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
-  animation: fadeIn 0.5s ease forwards;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: white;
+  border: 1px solid #ddd;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  animation: float 6s ease-in-out infinite;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+/* Diferentes tiempos de animación para cada burbuja */
+.shelter-bubble:nth-child(1) {
+  animation-duration: 7s;
+}
+.shelter-bubble:nth-child(2) {
+  animation-duration: 8s;
+}
+.shelter-bubble:nth-child(3) {
+  animation-duration: 9s;
+}
+.shelter-bubble:nth-child(4) {
+  animation-duration: 7.5s;
+}
+.shelter-bubble:nth-child(5) {
+  animation-duration: 8.5s;
 }
 
-.shelter-bubble:hover {
-  transform: scale(1.05);
-  z-index: 10;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-}
-
+/* Imágenes dentro de las burbujas */
 .shelter-bubble img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
+/* Burbuja por defecto cuando no hay imagen */
 .default-bubble {
   width: 100%;
   height: 100%;
   display: flex;
-  align-items: center;
   justify-content: center;
-  font-size: 5rem;
+  align-items: center;
+  background-color: #4a7c59;
+  color: white;
+  font-size: 24px;
   font-weight: bold;
-  color: #CCB999;
-  background: linear-gradient(135deg, #5f1804, #6d7464);
 }
 
+/* Tooltip simple */
 .bubble-tooltip {
   position: absolute;
-  bottom: -40px;
+  bottom: -30px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: rgba(95, 24, 4, 0.9);
-  color: #CCB999;
+  background-color: #333;
+  color: white;
   padding: 5px 10px;
   border-radius: 4px;
-  font-size: 14px;
+  font-size: 12px;
   white-space: nowrap;
   opacity: 0;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  pointer-events: none;
-  font-weight: 500;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 20;
+  visibility: hidden;
+  transition: opacity 0.3s;
 }
 
 .shelter-bubble:hover .bubble-tooltip {
   opacity: 1;
-  transform: translateX(-50%) translateY(-5px);
+  visibility: visible;
 }
 
-@media (max-width: 1024px) {
-  .shelter-bubbles-row {
-    gap: 20px;
+/* Animación de flotación simple */
+@keyframes float {
+  0% {
+    transform: translateY(0);
   }
-  
-  .shelter-bubble {
-    width: 180px;
-    height: 180px;
+  50% {
+    transform: translateY(-15px);
   }
-  
-  .default-bubble {
-    font-size: 4.5rem;
+  100% {
+    transform: translateY(0);
   }
 }
 
-@media (max-width: 768px) {
-  .shelter-bubbles-row {
-    gap: 15px;
-  }
-  
-  .shelter-bubble {
-    width: 150px;
-    height: 150px;
-  }
-  
-  .default-bubble {
-    font-size: 3.5rem;
-  }
-}
-
-@media (max-width: 576px) {
-  .shelter-bubble {
-    width: 120px;
-    height: 120px;
-  }
-  
-  .default-bubble {
-    font-size: 2.8rem;
-  }
-}

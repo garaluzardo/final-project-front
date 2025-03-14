@@ -15,7 +15,7 @@ const AccessFormPage = () => {
     <div className="AccessFormPage">
       <video autoPlay loop muted className="background-video" src="/videos/puppies.mp4"></video>
        <Link to="/" className="title-link" style={{ textDecoration: 'none' }} >
-      <h1>PET PAL</h1>
+       <h1>PET<span>PAL</span></h1>
       </Link>
       <div className={`container ${isSignUp ? 'right-panel-active' : ''}`}>
         <div className="form-container sign-up-container">

@@ -4,15 +4,16 @@
   justify-content: center;
   min-height: 100vh;
   width: 100%;
-  background-color: #f7f9fa;
+  height: 100%;
+  background-color: #854c48;
   padding-top: 20px;
 }
 
 .shelter-profile-content {
   width: 700px;
-  background-color: white;
+  /* background-color: #948467; */
   border-radius: 16px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+/*   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08); */
   overflow: hidden;
 }
 
@@ -32,6 +33,7 @@
   min-width: 300px;
   max-width: 500px;
   animation: slideIn 0.3s forwards;
+  height: 75px;
 }
 
 .toast.success {
@@ -99,7 +101,7 @@
 }
 
 .default-avatar-large {
-  background-color: #1d9bf0;
+  background-color: #387096;
   color: white;
   font-size: 180px;
   display: flex;
@@ -147,7 +149,9 @@
 /* Cabecera del perfil */
 .shelter-header {
   padding: 30px;
-  border-bottom: 1px solid #eff3f4;
+  border-bottom: 1px solid #AC9C81;
+  border-radius: 20px;
+  background-color: #AC9C81; /* COLOR CABECERA DEL PERFIL */
 }
 
 .header-top {
@@ -168,7 +172,7 @@
 }
 
 .shelter-avatar:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 
 .shelter-avatar img {
@@ -328,11 +332,15 @@
 .shelter-tabs-container {
   display: flex;
   flex-direction: column;
+  background-color: #AC9C81; /* COLOR CUERPO DEL PERFIL */
+  border-radius: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .shelter-tabs {
   display: flex;
-  border-bottom: 1px solid #eff3f4;
+  border-bottom: 1px solid #AC9C81;
 }
 
 .tab-button {
@@ -340,7 +348,7 @@
   padding: 16px 8px;
   background: none;
   border: none;
-  color: #536471;
+  color: #000000;
   font-weight: 500;
   font-size: 15px;
   cursor: pointer;
@@ -349,12 +357,12 @@
 }
 
 .tab-button:hover {
-  background-color: rgba(29, 155, 240, 0.1);
-  color: #1d9bf0;
+  background-color: rgba(0, 109, 182, 0.1);
+  color: #854C48;
 }
 
 .tab-button.active {
-  color: #0f1419;
+  color: #854C48;
   font-weight: bold;
 }
 
@@ -366,12 +374,12 @@
   transform: translateX(-50%);
   width: 50%;
   height: 4px;
-  background-color: #1d9bf0;
+  background-color: #854C48;
   border-radius: 2px;
 }
 
 .tab-count {
-  color: #536471;
+  color: #525252;
   font-size: 13px;
   margin-left: 4px;
 }
@@ -407,7 +415,7 @@
   justify-content: space-between;
   padding: 12px;
   border-radius: 12px;
-  background-color: #f7f9fa;
+  background-color: #8badbe;
   transition: background-color 0.2s;
 }
 

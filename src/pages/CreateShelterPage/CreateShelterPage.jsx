@@ -106,7 +106,7 @@ function CreateShelterPage() {
       const response = await shelterService.createShelter(formData);
       
       // Redirigir a la página de la protectora creada
-      navigate(`/protectoras/${response.data.handle}`);
+      navigate(`/shelters/${response.data.handle}`);
     } catch (error) {
       console.error("Error al crear la protectora:", error);
       

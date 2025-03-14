@@ -1,0 +1,168 @@
+/* Variables de colores - Versión Rústica */
+:root {
+  --color-slate: #77888C;        /* Gris azulado - Color 1 */
+  --color-moss: #868C79;         /* Verde musgo - Color 2 */
+  --color-sand: #D9CDBF;         /* Arena clara - Color 3 */
+  --color-coffee: #7c6a49;       /* Marrón café - Color 4 */
+  --color-rust: #854C48;         /* Óxido rojizo - Color 5 */
+  --color-white: #FFFFFF;        /* Blanco para contraste */
+  --color-off-white: #F4F1ED;    /* Blanco roto complementario */
+  --color-dark: #3A3A38;         /* Versión oscura neutra para textos */
+}
+
+.landing-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom, var(--color-sand), var(--color-off-white));
+  color: var(--color-dark);
+}
+
+.hero-title {
+  margin-top: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  width: 900px;
+  margin-bottom: -15px;
+}
+
+.hero-title>h1 {
+  font-family: var(--font-secondary);
+  font-size: 14.45rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: -40px;
+  text-align: left;
+  color: var(--color-rust);
+  margin-left: -15px;
+}
+
+.hero-title>h1>span {
+  color: var(--color-rust) !important;
+  font-size: 14.45rem;
+}
+
+.hero-title>h2 {
+  font-family: var(--font-secondary);
+  font-size: 4.2rem;
+  font-weight: 600;
+  line-height: 1.6;
+  margin-bottom: 1.1rem;
+  text-align: left;
+  color: var(--color-moss);
+}
+
+.hero-title>h3 {
+  font-family: var(--font-secondary);
+  font-size: 1.3rem;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+  text-align: left;
+  line-height: 1.4;
+  color: var(--color-slate);
+}
+
+.hero-title>h4 {
+  font-family: var(--font-secondary);
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align: left;
+  color: var(--color-coffee);
+}
+
+.landing-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+
+.landing-buttons button {
+  font-family: var(--font-secondary);
+  font-size: 1.3rem;
+  font-weight: 500;
+  line-height: 1.6;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  background-color: var(--color-rust);
+  color: var(--color-white);
+  border: none;
+  cursor: pointer;
+  width: 300px;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.landing-buttons button:hover {
+  background-color: #868C79;
+  transform: translateY(-3px);
+}
+
+.landing-counter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: var(--color-moss);
+  padding-top: 20px;
+  box-shadow: rgba(0, 0, 0, 0.349) 0px 0px 30px; 
+}
+
+.landing-footer {
+  width: 100%;
+  height: 164px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #72413e;
+  color: var(--color-sand);
+  padding: 50px 0;
+  box-shadow: rgba(0, 0, 0, 0.397) 0px 0px 30px; 
+}
+
+.section-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.section-content > h2 {
+  font-family: var(--font-secondary);
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: -20px;
+  color: var(--color-sand);
+}
+
+.perro-gif {
+  display: flex;
+  height: 150px;
+  margin-top: -150px;
+  margin-bottom: -22px;
+}
+
+/* Estilos para el contador */
+.counter-number {
+  color: var(--color-rust);
+  font-weight: bold;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.counter-label {
+  color: var(--color-sand);
+  font-weight: 600;
+}

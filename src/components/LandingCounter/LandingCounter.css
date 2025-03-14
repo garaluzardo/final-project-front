@@ -18,27 +18,30 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 60px;
+  gap: 50px;
+  width: 500px;
+  height: 200px;
+  border-radius: 100px;
 }
 
 .counter-column {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 
 .counter-digits {
   display: flex;
   justify-content: center;
-  gap: 5px;
 }
 
 .counter-digit {
-  font-family: 'Roboto Mono', monospace;
+  font-family: var(--font-secondary);
   font-size: 3.5rem;
   font-weight: 700;
-  color: #CCB999;
-  min-width: 2ch;
+  color: #854C48;
+  min-width: 1ch;
   text-align: center;
   position: relative;
   line-height: 1;
@@ -46,10 +49,15 @@
 }
 
 .counter-label {
+  display: flex;
+  justify-content: center;
   margin-top: 10px;
-  font-size: 1.2rem;
-  color: #CCB999;
+  font-size: 1.3rem;
+  color: #854C48;
   font-weight: 500;
+  font-family: var(--font-secondary);;
+  width: 30px;
+  text-transform: capitalize;
 }
 
 /* Estado de carga */

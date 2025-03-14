@@ -251,21 +251,21 @@ function ProfilePage() {
               className={`tab-button ${activeTab === "tasks" ? "active" : ""}`}
               onClick={() => setActiveTab("tasks")}
             >
-              Tareas <span className="tab-count">{completedTasks.length}</span>
+              Tareas realizadas <span className="tab-count">{completedTasks.length}</span>
             </button>
             
             <button 
               className={`tab-button ${activeTab === "adminShelters" ? "active" : ""}`}
               onClick={() => setActiveTab("adminShelters")}
             >
-              Protectoras que administra <span className="tab-count">{ownedShelters.length}</span>
+              Administra <span className="tab-count">{ownedShelters.length}</span>
             </button>
             
             <button 
               className={`tab-button ${activeTab === "memberShelters" ? "active" : ""}`}
               onClick={() => setActiveTab("memberShelters")}
             >
-              Protectoras en las que ayuda <span className="tab-count">{joinedShelters.length}</span>
+              Ayuda en <span className="tab-count">{joinedShelters.length}</span>
             </button>
           </div>
           

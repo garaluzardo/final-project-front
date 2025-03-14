@@ -4,15 +4,13 @@
   justify-content: center;
   min-height: 100vh;
   width: 100%;
-  background-color: #f7f9fa;
+  background-color: #8a534f;
   padding-top: 20px;
 }
 
 .profile-content {
   width: 700px;
-  background-color: white;
-  border-radius: 16px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  border-radius:20px;
   overflow: hidden;
 }
 
@@ -60,7 +58,10 @@
 /* Cabecera del perfil */
 .profile-header {
   padding: 30px;
-  border-bottom: 1px solid #eff3f4;
+  border-bottom: 1px solid #AC9C81;
+  background-color: #AC9C81;
+ /*  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08); */
+  border-radius: 20px;
 }
 
 .header-top {
@@ -162,11 +163,15 @@
 .profile-tabs-container {
   display: flex;
   flex-direction: column;
+  background-color: #AC9C81;
+  /*  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08); */
+   border-radius: 20px;
+   margin-top: 20px;
 }
 
 .profile-tabs {
   display: flex;
-  border-bottom: 1px solid #eff3f4;
+  border-bottom: 1px solid #AC9C81;
 }
 
 .tab-button {

@@ -35,9 +35,9 @@ function Navbar() {
           <img src={LogoBN} alt="Logo" className="logo-bn" />
           <img src={LogoColor} alt="Logo" className="logo-color" />
         </Link>
-        <p className="title">
-          <b>PET</b>PAL
-        </p>
+        <h1 className="title">
+          PETPAL
+        </h1>
       </div>
 
       {/* Sección derecha - Navegación y perfil */}
