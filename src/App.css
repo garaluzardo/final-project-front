@@ -1,3 +1,10 @@
 .App {
   text-align: center;
+  background-color: #DACEC0;
+  min-height: 100vh
+}
+
+/* Clase para poder anular el fondo general de la app en /access page.*/
+ .App.no-background {
+  background-color: transparent;
 }

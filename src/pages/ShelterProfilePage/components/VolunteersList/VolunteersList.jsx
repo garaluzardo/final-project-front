@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import userService from '../../services/user.service';
+import userService from '../../../../services/user.service';
 import './VolunteersList.css';
 
 const VolunteersList = ({ shelter }) => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './LandingPage.css';
-import LandingCounter from '../../components/LandingCounter/LandingCounter';
+import LandingCounter from './components/LandingCounter/LandingCounter';
 import Perrito from "../../assets/images/perrito.gif";
 /* import LandingBubbles from '../../components/LandingBubbles/LandingBubbles'; */
 /* import LogoBN from "../../assets/images/logo-bn.png"; */

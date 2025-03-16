@@ -1,13 +1,48 @@
-.shelters-container {
+/* Estilos para la página de protectoras */
+.shelters-page {
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .shelters-header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100vw;
-    height: 100vh;
-    background-color: #854c48;
-}
-
-.workingonit {
-    margin-top: 230px;
-    width: 300px;
-}
+    margin-bottom: 30px;
+  }
+  
+  .shelters-header h1 {
+    font-size: 2.5rem;
+    color: #6c5ce7;
+    margin-bottom: 20px;
+  }
+  
+  .shelters-loading, 
+  .shelters-error,
+  .no-shelters {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    text-align: center;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    color: #666;
+  }
+  
+  .shelters-loading p,
+  .shelters-error p,
+  .no-shelters p {
+    font-size: 1.2rem;
+  }
+  
+  /* Estilos responsivos */
+  @media (max-width: 768px) {
+    .shelters-page {
+      padding: 10px;
+    }
+  
+    .shelters-header h1 {
+      font-size: 2rem;
+    }
+  }

@@ -3,12 +3,13 @@ import { useParams, Link } from 'react-router-dom';
 import { AuthContext } from '../../context/auth.context';
 import shelterService from '../../services/shelter.service';
 import './ShelterProfilePage.css';
+import { toast } from 'react-toastify'; 
 
 // Componentes importados
-import Taskboard from '../../components/Taskboard/Taskboard';
-import AnimalsList from '../../components/AnimalsList/AnimalsList';
-import VolunteersList from '../../components/VolunteersList/VolunteersList';
-import Toast from '../../components/Toast/Toast';
+import Taskboard from './components/Taskboard/Taskboard';
+import AnimalsList from './components/AnimalsList/AnimalsList';
+import VolunteersList from './components/VolunteersList/VolunteersList';
+
 
 function ShelterProfilePage() {
   const [shelter, setShelter] = useState(null);
@@ -18,7 +19,6 @@ function ShelterProfilePage() {
   const [isMember, setIsMember] = useState(false);
   const [activeTab, setActiveTab] = useState('tasks');
   const [showProfileImage, setShowProfileImage] = useState(false);
-  const [toast, setToast] = useState(null);
   const [showManageAdmins, setShowManageAdmins] = useState(false);
   
   const { shelterHandle } = useParams();
@@ -112,83 +112,91 @@ function ShelterProfilePage() {
     );
   };
   
-  // Manejadores de acciones
-  const handleJoinLeave = async () => {
-    try {
-      if (isMember) {
-        // Comprobar si el usuario es el último administrador
-        if (isAdmin && shelter.admins.length === 1) {
-          setToast({
-            message: "No puedes abandonar la protectora ya que eres el único administrador. Designa a otro administrador primero.",
-            type: "error"
-          });
-          return;
-        }
-        
-        const response = await shelterService.leaveShelter(shelter._id);
-        setShelter(response.data);
-        setIsMember(false);
-        setIsAdmin(false);
-        
-        setToast({
-          message: "Has abandonado la protectora exitosamente.",
-          type: "success"
+ // Manejadores de acciones
+ const handleJoinLeave = async () => {
+  try {
+    if (isMember) {
+      // Comprobar si el usuario es el último administrador
+      if (isAdmin && shelter.admins.length === 1) {
+        // Usar toast.error en lugar de setToast
+        toast.error("No puedes abandonar la protectora ya que eres el único administrador. Designa a otro administrador primero.", {
+          position: "bottom-right",
+          autoClose: 3000,
         });
-      } else {
-        const response = await shelterService.joinShelter(shelter._id);
-        setShelter(response.data);
-        setIsMember(true);
-        
-        setToast({
-          message: "Te has unido a la protectora exitosamente.",
-          type: "success"
-        });
+        return;
       }
-    } catch (error) {
-      console.error("Error:", error);
-      setToast({
-        message: "Ocurrió un error. Por favor, inténtalo de nuevo.",
-        type: "error"
+      
+      const response = await shelterService.leaveShelter(shelter._id);
+      setShelter(response.data);
+      setIsMember(false);
+      setIsAdmin(false);
+      
+      // Usar toast.success en lugar de setToast
+      toast.success("Has abandonado la protectora exitosamente.", {
+        position: "bottom-right",
+        autoClose: 3000,
+      });
+    } else {
+      const response = await shelterService.joinShelter(shelter._id);
+      setShelter(response.data);
+      setIsMember(true);
+      
+      // Usar toast.success en lugar de setToast
+      toast.success("Te has unido a la protectora exitosamente.", {
+        position: "bottom-right",
+        autoClose: 3000,
       });
     }
-  };
-  
-  const handleAdminChange = async (userId, isCurrentlyAdmin) => {
-    try {
-      if (isCurrentlyAdmin) {
-        // Asegurarse de que no sea el último administrador
-        if (shelter.admins.length <= 1) {
-          setToast({
-            message: "No se puede quitar el último administrador.",
-            type: "error"
-          });
-          return;
-        }
-        
-        const response = await shelterService.removeAdmin(shelter._id, userId);
-        setShelter(response.data);
-        
-        setToast({
-          message: "Administrador removido exitosamente.",
-          type: "success"
+  } catch (error) {
+    console.error("Error:", error);
+    // Usar toast.error en lugar de setToast
+    toast.error("Ocurrió un error. Por favor, inténtalo de nuevo.", {
+      position: "bottom-right",
+      autoClose: 3000,
+    });
+  }
+};
+
+const handleAdminChange = async (userId, isCurrentlyAdmin) => {
+  try {
+    if (isCurrentlyAdmin) {
+      // Asegurarse de que no sea el último administrador
+      if (shelter.admins.length <= 1) {
+        // Usar toast.error en lugar de setToast
+        toast.error("No se puede quitar el último administrador.", {
+          position: "bottom-right",
+          autoClose: 3000,
         });
-      } else {
-        const response = await shelterService.addAdmin(shelter._id, userId);
-        setShelter(response.data);
-        
-        setToast({
-          message: "Administrador añadido exitosamente.",
-          type: "success"
-        });
+        return;
       }
-    } catch (error) {
-      console.error("Error:", error);
-      setToast({
-        message: "Ocurrió un error al cambiar el estado de administrador.",
-        type: "error"
+      
+      const response = await shelterService.removeAdmin(shelter._id, userId);
+      setShelter(response.data);
+      
+      // Usar toast.success en lugar de setToast
+      toast.success("Administrador removido exitosamente.", {
+        position: "bottom-right",
+        autoClose: 3000,
+      });
+    } else {
+      const response = await shelterService.addAdmin(shelter._id, userId);
+      setShelter(response.data);
+      
+      // Usar toast.success en lugar de setToast
+      toast.success("Administrador añadido exitosamente.", {
+        position: "bottom-right",
+        autoClose: 3000,
       });
     }
-  };
+  } catch (error) {
+    console.error("Error:", error);
+    // Usar toast.error en lugar de setToast
+    toast.error("Ocurrió un error al cambiar el estado de administrador.", {
+      position: "bottom-right",
+      autoClose: 3000,
+    });
+  }
+};
   
   // Loading state
   if (loading) {
@@ -215,14 +223,6 @@ function ShelterProfilePage() {
   
   return (
     <div className="shelter-profile-container">
-      {/* Toast para notificaciones */}
-      {toast && (
-        <Toast 
-          message={toast.message} 
-          type={toast.type} 
-          onClose={() => setToast(null)} 
-        />
-      )}
       
       {/* Overlay para imagen de perfil ampliada */}
       {showProfileImage && (

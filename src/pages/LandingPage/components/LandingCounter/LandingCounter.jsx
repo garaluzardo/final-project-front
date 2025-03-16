@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import statsService from '../../services/stats.service';
+import statsService from '../../../../services/stats.service';
 import "./LandingCounter.css";
 
 const LandingCounter = () => {

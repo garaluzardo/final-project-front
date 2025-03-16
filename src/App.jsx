@@ -1,5 +1,5 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -19,8 +19,12 @@ import IsPrivate from "./components/IsPrivate/IsPrivate";
 import IsAnon from "./components/IsAnon/IsAnon";
 
 function App() {
+
+const location = useLocation();
+const excludeBackground = location.pathname === '/access';
+
   return (
-    <div className="App">
+    <div className={`App ${excludeBackground ? 'no-background' : ''}`}>
       <Navbar />
 
       <Routes>
