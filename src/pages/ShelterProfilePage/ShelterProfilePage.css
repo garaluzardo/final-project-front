@@ -149,9 +149,8 @@
 /* Cabecera del perfil */
 .shelter-header {
   padding: 30px;
-  border-bottom: 1px solid #AC9C81;
   border-radius: 20px;
-  background-color: #AC9C81; /* COLOR CABECERA DEL PERFIL */
+  background-color: #f5f1f1; /* COLOR CABECERA DEL PERFIL */
 }
 
 .header-top {
@@ -332,7 +331,7 @@
 .shelter-tabs-container {
   display: flex;
   flex-direction: column;
-  background-color: #AC9C81; /* COLOR CUERPO DEL PERFIL */
+  background-color: #DACEC0; /* COLOR CUERPO DEL PERFIL */
   border-radius: 20px;
   margin-top: 20px;
   margin-bottom: 20px;
@@ -340,7 +339,6 @@
 
 .shelter-tabs {
   display: flex;
-  border-bottom: 1px solid #AC9C81;
 }
 
 .tab-button {
@@ -357,7 +355,8 @@
 }
 
 .tab-button:hover {
-  background-color: rgba(0, 109, 182, 0.1);
+  border-radius: 20px;
+  background-color: #854c480b;
   color: #854C48;
 }
 

@@ -429,31 +429,31 @@ function Taskboard({ shelterId, isAdmin, isMember, userId }) {
               className={`filter-button tag-health ${activeFilters.tags.includes('health') ? 'active' : ''}`}
               onClick={() => handleFilterTag('health')}
             >
-              🏥 Salud
+              Salud
             </button>
             <button
               className={`filter-button tag-food ${activeFilters.tags.includes('food') ? 'active' : ''}`}
               onClick={() => handleFilterTag('food')}
             >
-              🍎 Alimentación
+              Alimentación
             </button>
             <button
               className={`filter-button tag-cleaning ${activeFilters.tags.includes('cleaning') ? 'active' : ''}`}
               onClick={() => handleFilterTag('cleaning')}
             >
-              🧹 Limpieza
+              Limpieza
             </button>
             <button
               className={`filter-button tag-exercise ${activeFilters.tags.includes('exercise') ? 'active' : ''}`}
               onClick={() => handleFilterTag('exercise')}
             >
-              🏋️ Ejercicio
+              Ejercicio
             </button>
             <button
               className={`filter-button tag-other ${activeFilters.tags.includes('other') ? 'active' : ''}`}
               onClick={() => handleFilterTag('other')}
             >
-              🔖 Otros
+              Otros
             </button>
           </div>
         </div>
@@ -465,13 +465,13 @@ function Taskboard({ shelterId, isAdmin, isMember, userId }) {
               className={`filter-button ${activeFilters.status === false ? 'active' : ''}`}
               onClick={() => handleFilterStatus(false)}
             >
-              ⏳ Pendientes
+              Pendientes
             </button>
             <button
               className={`filter-button ${activeFilters.status === true ? 'active' : ''}`}
               onClick={() => handleFilterStatus(true)}
             >
-              ✅ Completadas
+              Completadas
             </button>
           </div>
         </div>

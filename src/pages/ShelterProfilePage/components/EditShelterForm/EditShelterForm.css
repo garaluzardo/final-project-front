@@ -1,0 +1,322 @@
+/* EditShelterForm.css */
+.edit-shelter-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .edit-shelter-modal {
+    width: 700px;
+    max-width: 95%;
+    max-height: 90vh;
+    background-color: white;
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+  
+  .edit-shelter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid #eff3f4;
+    background-color: #AC9C81;
+    color: white;
+  }
+  
+  .edit-shelter-header h2 {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+    color: white;
+  }
+  
+  .close-button,
+  .save-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+  }
+  
+  .close-button {
+    color: white;
+  }
+  
+  .close-button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  .save-button {
+    background-color: #854C48;
+    color: white;
+    border-radius: 20px;
+    padding: 8px 16px;
+    width: auto;
+    height: auto;
+  }
+  
+  .save-button:hover {
+    background-color: #a15d58;
+  }
+  
+  .save-button:disabled {
+    background-color: #c9a5a2;
+    cursor: not-allowed;
+  }
+  
+  .edit-shelter-content {
+    padding: 0;
+    overflow-y: auto;
+    flex: 1;
+    background-color: #DACEC0;
+  }
+  
+  .error-message {
+    background-color: #ffebee;
+    color: #d32f2f;
+    padding: 12px 15px;
+    margin: 15px;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+  
+  /* Sección de imagen */
+  .shelter-image-edit {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 25px 0;
+    background-color: #C0B297;
+  }
+  
+  .shelter-avatar-edit {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.2s;
+  }
+  
+  .shelter-avatar-edit:hover {
+    opacity: 0.9;
+  }
+  
+  .shelter-avatar-edit img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .default-avatar-edit {
+    width: 100%;
+    height: 100%;
+    background-color: #854C48;
+    color: white;
+    font-size: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+  }
+  
+  .upload-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white;
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  
+  .shelter-avatar-edit:hover .upload-icon {
+    opacity: 1;
+  }
+  
+  /* Campos del formulario */
+  .form-fields {
+    padding: 20px;
+  }
+  
+  .form-fields h3 {
+    font-size: 18px;
+    margin: 30px 0 15px 0;
+    color: #854C48;
+    border-bottom: 1px solid #C0B297;
+    padding-bottom: 10px;
+  }
+  
+  .form-fields h3:first-child {
+    margin-top: 0;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+    position: relative;
+  }
+  
+  .form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 8px;
+  }
+  
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #cfd9de;
+    background-color: white;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #333;
+    transition: border-color 0.2s;
+  }
+  
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    border-color: #854C48;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(133, 76, 72, 0.2);
+  }
+  
+  .form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  
+  .character-count {
+    position: absolute;
+    bottom: -20px;
+    right: 0;
+    font-size: 12px;
+    color: #666;
+  }
+  
+  .help-text {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+  }
+  
+  /* Input especial para handle */
+  .handle-input {
+    display: flex;
+    align-items: center;
+    border: 1px solid #cfd9de;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+    background-color: white;
+  }
+  
+  .handle-input:focus-within {
+    border-color: #854C48;
+    box-shadow: 0 0 0 2px rgba(133, 76, 72, 0.2);
+  }
+  
+  .handle-prefix {
+    padding: 0 8px;
+    font-size: 16px;
+    color: #666;
+    background-color: #f7f9fa;
+    border-right: 1px solid #cfd9de;
+    line-height: 46px;
+  }
+  
+  .handle-input input {
+    border: none;
+    border-radius: 0;
+  }
+  
+  .handle-input input:focus {
+    box-shadow: none;
+  }
+  
+  /* Layout de filas para campos relacionados */
+  .form-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 0;
+  }
+  
+  .form-row .form-group {
+    flex: 1;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .edit-shelter-modal {
+      width: 100%;
+      max-width: 100%;
+      height: 100%;
+      max-height: 100%;
+      border-radius: 0;
+    }
+    
+    .shelter-avatar-edit {
+      width: 120px;
+      height: 120px;
+    }
+  
+    .form-row {
+      flex-direction: column;
+      gap: 0;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .edit-shelter-header {
+      padding: 12px 15px;
+    }
+    
+    .edit-shelter-header h2 {
+      font-size: 18px;
+    }
+    
+    .form-fields {
+      padding: 15px;
+    }
+    
+    .shelter-avatar-edit {
+      width: 100px;
+      height: 100px;
+    }
+    
+    .default-avatar-edit {
+      font-size: 50px;
+    }
+  }

@@ -62,7 +62,7 @@
   margin-bottom: 1.5rem;
   text-align: left;
   line-height: 1.4;
-  color: var(--color-slate);
+  color: var(--color-rust);
 }
 
 .hero-title>h4 {
@@ -71,7 +71,7 @@
   font-weight: 700;
   margin-bottom: 2rem;
   text-align: left;
-  color: var(--color-coffee);
+  color: var(--color-rust);
 }
 
 .landing-buttons {
@@ -154,6 +154,8 @@
   margin-top: -150px;
   margin-bottom: -22px;
 }
+
+
 
 /* Estilos para el contador */
 .counter-number {
