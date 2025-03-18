@@ -1,8 +1,8 @@
 import React, { useState, useRef } from "react";
-import shelterService from "../../services/shelter.service";
+import shelterService from "../../../../services/shelter.service";
 import "./EditShelterForm.css";
 
-const EditShelterForm = ({ shelter, onClose, onUpdate }) => {
+const EditShelterForm = ({ shelter, onClose, onUpdate, onDelete, isDeleting }) => {
   // Estado para los campos del formulario
   const [formData, setFormData] = useState({
     name: shelter?.name || "",
@@ -37,6 +37,8 @@ const EditShelterForm = ({ shelter, onClose, onUpdate }) => {
   const [error, setError] = useState("");
   // Estado para mostrar que está guardando
   const [isSaving, setIsSaving] = useState(false);
+  // Estado para confirmación de eliminación
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   
   // Referencia al input de archivo oculto
   const fileInputRef = useRef(null);
@@ -109,8 +111,13 @@ const EditShelterForm = ({ shelter, onClose, onUpdate }) => {
       // Si se seleccionó un nuevo archivo, subirlo
       if (selectedFile) {
         // Método de subida de imagen (cuando esté implementado Cloudinary)
-        const uploadResponse = await shelterService.uploadShelterImage(selectedFile);
-        imageUrl = uploadResponse.data.secure_url;
+        try {
+          const uploadResponse = await shelterService.uploadShelterImage(selectedFile);
+          imageUrl = uploadResponse.data.secure_url;
+        } catch (uploadError) {
+          console.error("Error al subir imagen:", uploadError);
+          // Continuar con la imagen actual si hay un error en la subida
+        }
       }
       
       // Actualizar el perfil con la nueva URL de imagen
@@ -148,7 +155,7 @@ const EditShelterForm = ({ shelter, onClose, onUpdate }) => {
           <button 
             className="save-button" 
             onClick={handleSubmit}
-            disabled={isSaving}
+            disabled={isSaving || isDeleting}
           >
             {isSaving ? "Guardando..." : "Guardar"}
           </button>
@@ -392,6 +399,46 @@ const EditShelterForm = ({ shelter, onClose, onUpdate }) => {
                   onChange={handleChange}
                   placeholder="https://twitter.com/tuprotectora"
                 />
+              </div>
+              
+              {/* Sección para eliminar protectora */}
+              <div className="delete-shelter-section">
+                <h3>Zona de peligro</h3>
+                <p className="warning-text">
+                  La eliminación de una protectora es irreversible. Se eliminarán todas las tareas, animales y
+                  referencias asociadas a esta protectora.
+                </p>
+                
+                {!showDeleteConfirm ? (
+                  <button 
+                    type="button" 
+                    className="delete-shelter-button"
+                    onClick={() => setShowDeleteConfirm(true)}
+                  >
+                    Eliminar protectora
+                  </button>
+                ) : (
+                  <div className="delete-confirmation">
+                    <p>¿Estás completamente seguro? Esta acción no se puede deshacer.</p>
+                    <div className="delete-actions">
+                      <button 
+                        type="button" 
+                        className="cancel-delete-button"
+                        onClick={() => setShowDeleteConfirm(false)}
+                      >
+                        Cancelar
+                      </button>
+                      <button 
+                        type="button" 
+                        className="confirm-delete-button"
+                        onClick={onDelete}
+                        disabled={isDeleting}
+                      >
+                        {isDeleting ? "Eliminando..." : "Sí, eliminar protectora"}
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </form>

@@ -88,6 +88,21 @@ class ShelterService {
   getShelterVolunteers = (id) => {
     return this.api.get(`/api/shelters/${id}/volunteers`);
   };
+
+    // Buscar protectoras por criterios
+    searchShelters = (searchParams) => {
+      return this.api.get("/api/shelters/search", { params: searchParams });
+    };
+  
+    // Método para subir imágenes cuando conecte con Cloudinary pendiente aún
+    uploadShelterImage = (file) => {
+      // Crear un FormData para enviar el archivo
+      const uploadData = new FormData();
+      uploadData.append("file", file);
+      
+      // Pendiente crear el endpoint en el back
+      return this.api.post("/api/upload", uploadData);
+    };
 }
 
 // Create one instance (object) of the service

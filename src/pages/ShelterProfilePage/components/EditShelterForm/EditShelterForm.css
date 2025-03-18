@@ -10,9 +10,9 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
-  }
+}
   
-  .edit-shelter-modal {
+.edit-shelter-modal {
     width: 700px;
     max-width: 95%;
     max-height: 90vh;
@@ -22,9 +22,9 @@
     display: flex;
     flex-direction: column;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  }
+}
   
-  .edit-shelter-header {
+.edit-shelter-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -32,17 +32,17 @@
     border-bottom: 1px solid #eff3f4;
     background-color: #AC9C81;
     color: white;
-  }
+}
   
-  .edit-shelter-header h2 {
+.edit-shelter-header h2 {
     font-size: 20px;
     font-weight: bold;
     margin: 0;
     color: white;
-  }
+}
   
-  .close-button,
-  .save-button {
+.close-button,
+.save-button {
     background: none;
     border: none;
     cursor: pointer;
@@ -56,60 +56,60 @@
     align-items: center;
     justify-content: center;
     transition: background-color 0.2s;
-  }
+}
   
-  .close-button {
+.close-button {
     color: white;
-  }
+}
   
-  .close-button:hover {
+.close-button:hover {
     background-color: rgba(255, 255, 255, 0.2);
-  }
+}
   
-  .save-button {
+.save-button {
     background-color: #854C48;
     color: white;
     border-radius: 20px;
     padding: 8px 16px;
     width: auto;
     height: auto;
-  }
+}
   
-  .save-button:hover {
+.save-button:hover {
     background-color: #a15d58;
-  }
+}
   
-  .save-button:disabled {
+.save-button:disabled {
     background-color: #c9a5a2;
     cursor: not-allowed;
-  }
+}
   
-  .edit-shelter-content {
+.edit-shelter-content {
     padding: 0;
     overflow-y: auto;
     flex: 1;
     background-color: #DACEC0;
-  }
+}
   
-  .error-message {
+.error-message {
     background-color: #ffebee;
     color: #d32f2f;
     padding: 12px 15px;
     margin: 15px;
     border-radius: 8px;
     font-size: 14px;
-  }
+}
   
-  /* Sección de imagen */
-  .shelter-image-edit {
+/* Sección de imagen */
+.shelter-image-edit {
     width: 100%;
     display: flex;
     justify-content: center;
     padding: 25px 0;
     background-color: #C0B297;
-  }
+}
   
-  .shelter-avatar-edit {
+.shelter-avatar-edit {
     width: 150px;
     height: 150px;
     border-radius: 50%;
@@ -118,19 +118,19 @@
     position: relative;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     transition: opacity 0.2s;
-  }
+}
   
-  .shelter-avatar-edit:hover {
+.shelter-avatar-edit:hover {
     opacity: 0.9;
-  }
+}
   
-  .shelter-avatar-edit img {
+.shelter-avatar-edit img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-  }
+}
   
-  .default-avatar-edit {
+.default-avatar-edit {
     width: 100%;
     height: 100%;
     background-color: #854C48;
@@ -140,9 +140,9 @@
     justify-content: center;
     align-items: center;
     font-weight: bold;
-  }
+}
   
-  .upload-icon {
+.upload-icon {
     position: absolute;
     top: 0;
     left: 0;
@@ -156,45 +156,45 @@
     align-items: center;
     opacity: 0;
     transition: opacity 0.2s;
-  }
+}
   
-  .shelter-avatar-edit:hover .upload-icon {
+.shelter-avatar-edit:hover .upload-icon {
     opacity: 1;
-  }
+}
   
-  /* Campos del formulario */
-  .form-fields {
+/* Campos del formulario */
+.form-fields {
     padding: 20px;
-  }
+}
   
-  .form-fields h3 {
+.form-fields h3 {
     font-size: 18px;
     margin: 30px 0 15px 0;
     color: #854C48;
     border-bottom: 1px solid #C0B297;
     padding-bottom: 10px;
-  }
+}
   
-  .form-fields h3:first-child {
+.form-fields h3:first-child {
     margin-top: 0;
-  }
+}
   
-  .form-group {
+.form-group {
     margin-bottom: 20px;
     position: relative;
-  }
+}
   
-  .form-group label {
+.form-group label {
     display: block;
     font-size: 14px;
     font-weight: 500;
     color: #333;
     margin-bottom: 8px;
-  }
+}
   
-  .form-group input,
-  .form-group textarea,
-  .form-group select {
+.form-group input,
+.form-group textarea,
+.form-group select {
     width: 100%;
     padding: 12px 15px;
     border: 1px solid #cfd9de;
@@ -203,37 +203,37 @@
     font-size: 16px;
     color: #333;
     transition: border-color 0.2s;
-  }
+}
   
-  .form-group input:focus,
-  .form-group textarea:focus,
-  .form-group select:focus {
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
     border-color: #854C48;
     outline: none;
     box-shadow: 0 0 0 2px rgba(133, 76, 72, 0.2);
-  }
+}
   
-  .form-group textarea {
+.form-group textarea {
     resize: vertical;
     min-height: 100px;
-  }
+}
   
-  .character-count {
+.character-count {
     position: absolute;
     bottom: -20px;
     right: 0;
     font-size: 12px;
     color: #666;
-  }
+}
   
-  .help-text {
+.help-text {
     font-size: 12px;
     color: #666;
     margin-top: 5px;
-  }
+}
   
-  /* Input especial para handle */
-  .handle-input {
+/* Input especial para handle */
+.handle-input {
     display: flex;
     align-items: center;
     border: 1px solid #cfd9de;
@@ -241,44 +241,135 @@
     overflow: hidden;
     transition: border-color 0.2s;
     background-color: white;
-  }
+}
   
-  .handle-input:focus-within {
+.handle-input:focus-within {
     border-color: #854C48;
     box-shadow: 0 0 0 2px rgba(133, 76, 72, 0.2);
-  }
+}
   
-  .handle-prefix {
+.handle-prefix {
     padding: 0 8px;
     font-size: 16px;
     color: #666;
     background-color: #f7f9fa;
     border-right: 1px solid #cfd9de;
     line-height: 46px;
-  }
+}
   
-  .handle-input input {
+.handle-input input {
     border: none;
     border-radius: 0;
-  }
+}
   
-  .handle-input input:focus {
+.handle-input input:focus {
     box-shadow: none;
-  }
+}
   
-  /* Layout de filas para campos relacionados */
-  .form-row {
+/* Layout de filas para campos relacionados */
+.form-row {
     display: flex;
     gap: 15px;
     margin-bottom: 0;
-  }
+}
   
-  .form-row .form-group {
+.form-row .form-group {
     flex: 1;
-  }
+}
+
+/* Sección para eliminar protectora */
+.delete-shelter-section {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: rgba(244, 67, 54, 0.1);
+    border-radius: 8px;
+    border: 1px solid rgba(244, 67, 54, 0.3);
+}
+
+.delete-shelter-section h3 {
+    color: #d32f2f;
+    margin-top: 0;
+}
+
+.warning-text {
+    color: #d32f2f;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.delete-shelter-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.delete-shelter-button:hover {
+    background-color: #d32f2f;
+}
+
+.delete-confirmation {
+    margin-top: 10px;
+    padding: 15px;
+    background-color: rgba(244, 67, 54, 0.2);
+    border-radius: 8px;
+}
+
+.delete-confirmation p {
+    color: #d32f2f;
+    font-weight: 500;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.delete-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.cancel-delete-button {
+    background-color: #f5f5f5;
+    color: #333;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    flex: 1;
+}
+
+.cancel-delete-button:hover {
+    background-color: #e0e0e0;
+}
+
+.confirm-delete-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    flex: 2;
+}
+
+.confirm-delete-button:hover {
+    background-color: #d32f2f;
+}
+
+.confirm-delete-button:disabled {
+    background-color: #ffcdd2;
+    cursor: not-allowed;
+}
   
-  /* Responsive */
-  @media (max-width: 768px) {
+/* Responsive */
+@media (max-width: 768px) {
     .edit-shelter-modal {
       width: 100%;
       max-width: 100%;
@@ -296,9 +387,13 @@
       flex-direction: column;
       gap: 0;
     }
-  }
+
+    .delete-actions {
+        flex-direction: column;
+    }
+}
   
-  @media (max-width: 480px) {
+@media (max-width: 480px) {
     .edit-shelter-header {
       padding: 12px 15px;
     }
@@ -319,4 +414,4 @@
     .default-avatar-edit {
       font-size: 50px;
     }
-  }
+}
