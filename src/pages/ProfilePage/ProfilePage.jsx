@@ -4,6 +4,8 @@ import { useParams, Link, Navigate } from "react-router-dom";
 import userService from "../../services/user.service";
 import "./ProfilePage.css";
 import EditProfileForm from "../../components/EditProfileForm/EditProfileForm";
+// Importar el nuevo componente CompletedTasks
+import CompletedTasks from "./components/CompletedTasks/CompletedTasks";
 
 function ProfilePage() {
   const { userHandle } = useParams(); // Obtener el handle de la URL si existe
@@ -47,6 +49,7 @@ function ProfilePage() {
         // Cargar tareas completadas
         userService.getCompletedTasks(userId)
           .then((response) => {
+            console.log("Tareas completadas obtenidas:", response.data);
             setCompletedTasks(response.data);
           })
           .catch((error) => {
@@ -101,29 +104,6 @@ function ProfilePage() {
     if (location.island) parts.push(location.island);
     
     return parts.length > 0 ? parts.join(', ') : null;
-  };
-
-  // Función para agrupar tareas por protectora
-  const groupTasksByShelter = () => {
-    const grouped = {};
-    
-    completedTasks.forEach(task => {
-      const shelterName = task.shelter?.name || "Sin protectora";
-      const shelterId = task.shelter?._id || "unknown";
-      const shelterHandle = task.shelter?.handle || "";
-      
-      if (!grouped[shelterId]) {
-        grouped[shelterId] = {
-          name: shelterName,
-          handle: shelterHandle,
-          tasks: []
-        };
-      }
-      
-      grouped[shelterId].tasks.push(task);
-    });
-    
-    return grouped;
   };
 
   // Manejar la actualización del perfil después de editar
@@ -270,54 +250,14 @@ function ProfilePage() {
           </div>
           
           <div className="profile-tab-content">
-            {/* Contenido Tab: Tareas */}
+            {/* Contenido Tab: Tareas - MODIFICADO PARA USAR EL COMPONENTE */}
             {activeTab === "tasks" && (
               <div className="tasks-content">
-                {completedTasks.length === 0 ? (
-                  <div className="empty-content">
-                    <p>
-                      {isOwnProfile 
-                        ? "Aún no has completado ninguna tarea." 
-                        : `${profile?.name || profile?.handle} aún no ha completado ninguna tarea.`}
-                    </p>
-                  </div>
-                ) : (
-                  <div className="tasks-by-shelter">
-                    {Object.entries(groupTasksByShelter()).map(([shelterId, shelter]) => (
-                      <div key={shelterId} className="shelter-tasks-group">
-                        <h3 className="shelter-name">
-                          {shelter.handle ? (
-                            <Link to={`/shelters/${shelter.handle}`}>{shelter.name}</Link>
-                          ) : (
-                            shelter.name
-                          )}
-                        </h3>
-                        
-                        <div className="tasks-list">
-                          {shelter.tasks.map((task) => (
-                            <div key={task._id} className="task-item">
-                              <h4 className="task-title">{task.title}</h4>
-                              <p className="task-description">{task.description}</p>
-                              <div className="task-meta">
-                                <span className="task-date">
-                                  {new Date(task.completedAt).toLocaleDateString()}
-                                </span>
-                                {task.priority && (
-                                  <span className={`task-priority ${task.priority}`}>
-                                    {task.priority}
-                                  </span>
-                                )}
-                                {task.category && (
-                                  <span className="task-category">{task.category}</span>
-                                )}
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
+                <CompletedTasks 
+                  completedTasks={completedTasks}
+                  isOwnProfile={isOwnProfile}
+                  profile={profile}
+                />
               </div>
             )}
             

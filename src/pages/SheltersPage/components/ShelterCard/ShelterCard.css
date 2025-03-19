@@ -1,171 +1,204 @@
+/* ShelterCard.css */
 .shelter-card {
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    margin-bottom: 20px;
-    width: 100%;
-    max-width: 350px;
-  }
-  
-  .shelter-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-  }
-  
-  .shelter-card-content {
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    text-decoration: none;
-    color: inherit;
-  }
-  
-  .shelter-avatar {
-    align-self: center;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    overflow: hidden;
-    margin-bottom: 15px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .shelter-avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .default-avatar {
-    width: 100%;
-    height: 100%;
-    background-color: #6c5ce7;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 32px;
-    font-weight: bold;
-  }
-  
-  .shelter-name {
-    font-size: 18px;
-    font-weight: 600;
-    margin: 0 0 5px;
-    color: #333;
-    text-align: center;
-  }
-  
-  .shelter-handle {
-    font-size: 14px;
-    color: #666;
-    margin: 0 0 10px;
-    text-align: center;
-  }
-  
-  .shelter-location,
-  .shelter-joined,
-  .shelter-website {
-    font-size: 14px;
-    margin: 0 0 10px;
-    display: flex;
-    align-items: center;
-    color: #666;
+  --img-scale: 1.001;
+  --title-color: #333;
+  --link-icon-translate: -20px;
+  --link-icon-opacity: 0;
+  position: relative;
+  border-radius: 20px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  transform-origin: center;
+  transition: all 0.4s ease-in-out;
+  overflow: hidden;
+  height: 100%;
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+}
+
+.shelter-card:hover, .shelter-card:focus-within {
+  --img-scale: 1.1;
+  --title-color: #854C48; /* Theme rust color */
+  --link-icon-translate: 0;
+  --link-icon-opacity: 1;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+  transform: scale(1.01);
+}
+
+.article-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+figure {
+  margin: 0;
+  padding: 0;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  position: relative;
+}
+
+.shelter-card img {
+  max-width: 100%;
+  transform-origin: center;
+  transform: scale(var(--img-scale));
+  transition: transform 0.4s ease-in-out;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.default-image {
+  width: 100%;
+  height: 100%;
+  background-color: #854C48; /* Theme rust color */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  font-weight: bold;
+  transform: scale(var(--img-scale));
+  transition: transform 0.4s ease-in-out;
+}
+
+.article-body {
+  padding: 24px;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.shelter-card h2 {
+  margin: 0 0 8px 0;
+  font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--title-color);
+  transition: color 0.3s ease-out;
+}
+
+.shelter-handle {
+  margin: 0 0 12px 0;
+  font-size: 1rem;
+  color: #767676;
+}
+
+.shelter-bio {
+  margin: 0 0 16px 0;
+  color: #444;
+  font-size: 1rem;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex-grow: 1;
+  text-align: left;
+}
+
+.shelter-meta {
+  margin-bottom: 16px;
+  font-size: 0.85rem;
+  color: #767676;
+}
+
+.shelter-location, .shelter-date {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.location-icon, .date-icon {
+  width: 18px;
+  height: 18px;
+  margin-right: 6px;
+}
+
+.shelter-stats {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-value {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #854C48; /* Theme rust color */
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: #767676;
+}
+
+.read-more {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: #854C48; /* Theme rust color */
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-top: auto;
+}
+
+.read-more:focus {
+  outline: 1px dotted #854C48;
+}
+
+.read-more .icon {
+  min-width: 24px;
+  width: 24px;
+  height: 24px;
+  margin-left: 5px;
+  transform: translateX(var(--link-icon-translate));
+  opacity: var(--link-icon-opacity);
+  transition: all 0.3s;
+}
+
+.sr-only:not(:focus):not(:active) {
+  clip: rect(0 0 0 0); 
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap; 
+  width: 1px;
+}
+
+/* Responsive design */
+@media screen and (max-width: 768px) {
+  .shelter-card h2 {
+    font-size: 1.5rem;
   }
   
   .shelter-bio {
-    font-size: 14px;
-    line-height: 1.5;
-    margin: 0 0 15px;
-    color: #555;
-    text-align: left;
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .article-body {
+    padding: 16px;
   }
   
   .shelter-stats {
-    display: flex;
-    justify-content: space-around;
-    padding: 10px 0;
-    border-top: 1px solid #eee;
-    margin-top: auto;
+    margin-bottom: 16px;
   }
   
-  .stat {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  .stat-value {
+    font-size: 1rem;
   }
-  
-  .stat-number {
-    font-weight: bold;
-    color: #6c5ce7;
-    font-size: 18px;
-  }
-  
-  .stat-label {
-    font-size: 12px;
-    color: #666;
-  }
-  
-  .shelter-actions {
-    padding: 15px;
-    border-top: 1px solid #eee;
-    text-align: center;
-  }
-  
-  .action-button {
-    width: 100%;
-    padding: 8px 0;
-    border: none;
-    border-radius: 6px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-  
-  .action-button.join {
-    background-color: #6c5ce7;
-    color: white;
-  }
-  
-  .action-button.join:hover {
-    background-color: #5b4bc4;
-  }
-  
-  .action-button.leave {
-    background-color: #ff4757;
-    color: white;
-  }
-  
-  .action-button.leave:hover {
-    background-color: #e0364a;
-  }
-  
-  .action-button:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-  }
-  
-  .website-link {
-    color: #6c5ce7;
-    text-decoration: none;
-    transition: color 0.2s ease;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  
-  .website-link:hover {
-    color: #5b4bc4;
-    text-decoration: underline;
-  }
-  
-  /* Responsive */
-  @media (max-width: 768px) {
-    .shelter-card {
-      max-width: 100%;
-    }
-  }
+}

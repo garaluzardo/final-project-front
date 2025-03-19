@@ -1,48 +1,59 @@
 /* Estilos para la página de protectoras */
 .shelters-page {
-    margin: 0 auto;
-    padding: 20px;
+  margin: 0 auto;
+  padding: 20px;
+  max-width: 1200px;
+}
+
+.shelters-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.shelters-header h1 {
+  font-size: 2.5rem;
+  color: #854C48; /* Cambiado a tu paleta de colores rústica */
+  margin-bottom: 20px;
+  font-family: var(--font-secondary);
+  font-weight: 700;
+}
+
+.shelters-loading, 
+.shelters-error,
+.no-shelters {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  text-align: center;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  color: #666;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.shelters-loading p,
+.shelters-error p,
+.no-shelters p {
+  font-size: 1.2rem;
+  font-family: var(--font-primary);
+}
+
+/* Estilos para el mensaje de búsqueda sin resultados */
+.no-shelters p {
+  color: #854C48;
+  font-weight: 500;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .shelters-page {
+    padding: 10px;
   }
-  
-  .shelters-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 30px;
-  }
-  
+
   .shelters-header h1 {
-    font-size: 2.5rem;
-    color: #6c5ce7;
-    margin-bottom: 20px;
+    font-size: 2rem;
   }
-  
-  .shelters-loading, 
-  .shelters-error,
-  .no-shelters {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 300px;
-    text-align: center;
-    background-color: #f9f9f9;
-    border-radius: 12px;
-    color: #666;
-  }
-  
-  .shelters-loading p,
-  .shelters-error p,
-  .no-shelters p {
-    font-size: 1.2rem;
-  }
-  
-  /* Estilos responsivos */
-  @media (max-width: 768px) {
-    .shelters-page {
-      padding: 10px;
-    }
-  
-    .shelters-header h1 {
-      font-size: 2rem;
-    }
-  }
+}

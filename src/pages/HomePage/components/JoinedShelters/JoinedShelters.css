@@ -1,0 +1,111 @@
+/* JoinedShelters.css */
+.joined-shelters-container {
+    margin-bottom: 30px;
+}
+
+.joined-shelters-container h2 {
+    margin-bottom: 20px;
+    color: #854C48;
+    font-size: 1.5rem;
+}
+
+.joined-shelters-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.joined-shelter-item {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    background-color: white;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.joined-shelter-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.shelter-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 15px;
+}
+
+.shelter-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.default-shelter-avatar {
+    width: 100%;
+    height: 100%;
+    background-color: #854C48;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.shelter-name-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.shelter-details h3 {
+    margin: 0;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.admin-badge {
+    background-color: #1d9bf0;
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 12px;
+    font-weight: bold;
+}
+
+.shelter-details p {
+    margin: 0;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.no-shelters {
+    text-align: center;
+    padding: 30px;
+    background-color: #f8f9fa;
+    border-radius: 12px;
+}
+
+.no-shelters p {
+    margin-bottom: 15px;
+    color: #666;
+}
+
+.explore-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #854C48;
+    color: white;
+    text-decoration: none;
+    border-radius: 20px;
+    transition: background-color 0.2s;
+}
+
+.explore-button:hover {
+    background-color: #72413e;
+}

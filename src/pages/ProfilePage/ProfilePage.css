@@ -59,7 +59,7 @@
 .profile-header {
   padding: 30px;
   border-bottom: 1px solid #AC9C81;
-  background-color: #AC9C81;
+  background-color: #F5F1F1;
  /*  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08); */
   border-radius: 20px;
 }
@@ -106,9 +106,8 @@
 .edit-profile-button {
   padding: 10px 16px;
   border-radius: 20px;
-  border: 1px solid #cfd9de;
-  background: white;
-  color: #0f1419;
+  background: #1b9562;
+  color: white;
   font-weight: bold;
   text-decoration: none;
   transition: background-color 0.2s;
@@ -116,7 +115,7 @@
 }
 
 .edit-profile-button:hover {
-  background-color: #eff3f4;
+  background-color: #21b175;
 }
 
 /* Información del perfil */
@@ -163,7 +162,7 @@
 .profile-tabs-container {
   display: flex;
   flex-direction: column;
-  background-color: #AC9C81;
+
   /*  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08); */
    border-radius: 20px;
    margin-top: 20px;
@@ -171,7 +170,7 @@
 
 .profile-tabs {
   display: flex;
-  border-bottom: 1px solid #AC9C81;
+
 }
 
 .tab-button {

@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import SheltersList from "./components/SheltersList/SheltersList";
+import SheltersSearch from "./components/SheltersSearch/SheltersSearch";
 import shelterService from '../../services/shelter.service';
 import './SheltersPage.css';
 
 function SheltersPage() {
   const [shelters, setShelters] = useState([]);
+  const [filteredShelters, setFilteredShelters] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -14,6 +17,7 @@ function SheltersPage() {
       try {
         const response = await shelterService.getAllShelters();
         setShelters(response.data);
+        setFilteredShelters(response.data);
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching shelters:", error);
@@ -25,11 +29,47 @@ function SheltersPage() {
     fetchShelters();
   }, []);
 
+  // Filtrar protectoras cuando cambia el término de búsqueda
+  useEffect(() => {
+    if (searchTerm.trim() === '') {
+      setFilteredShelters(shelters);
+      return;
+    }
+
+    const lowerCaseSearch = searchTerm.toLowerCase();
+    const filtered = shelters.filter(shelter => 
+      shelter.name.toLowerCase().includes(lowerCaseSearch) ||
+      shelter.handle.toLowerCase().includes(lowerCaseSearch) ||
+      (shelter.location?.city && shelter.location.city.toLowerCase().includes(lowerCaseSearch)) ||
+      (shelter.location?.municipality && shelter.location.municipality.toLowerCase().includes(lowerCaseSearch)) ||
+      (shelter.location?.province && shelter.location.province.toLowerCase().includes(lowerCaseSearch)) ||
+      (shelter.location?.island && shelter.location.island.toLowerCase().includes(lowerCaseSearch))
+    );
+
+    setFilteredShelters(filtered);
+  }, [searchTerm, shelters]);
+
   // Función para actualizar la lista después de unirse/dejar una protectora
   const handleShelterUpdate = async () => {
     try {
       const response = await shelterService.getAllShelters();
       setShelters(response.data);
+      
+      // Mantener el filtro de búsqueda cuando se actualiza la lista
+      if (searchTerm.trim() !== '') {
+        const lowerCaseSearch = searchTerm.toLowerCase();
+        const filtered = response.data.filter(shelter => 
+          shelter.name.toLowerCase().includes(lowerCaseSearch) ||
+          shelter.handle.toLowerCase().includes(lowerCaseSearch) ||
+          (shelter.location?.city && shelter.location.city.toLowerCase().includes(lowerCaseSearch)) ||
+          (shelter.location?.municipality && shelter.location.municipality.toLowerCase().includes(lowerCaseSearch)) ||
+          (shelter.location?.province && shelter.location.province.toLowerCase().includes(lowerCaseSearch)) ||
+          (shelter.location?.island && shelter.location.island.toLowerCase().includes(lowerCaseSearch))
+        );
+        setFilteredShelters(filtered);
+      } else {
+        setFilteredShelters(response.data);
+      }
     } catch (error) {
       console.error("Error updating shelters:", error);
     }
@@ -56,15 +96,23 @@ function SheltersPage() {
     <div className="shelters-page">
       <div className="shelters-header">
         <h1>Protectoras</h1>
+        <SheltersSearch 
+          searchTerm={searchTerm} 
+          setSearchTerm={setSearchTerm} 
+        />
       </div>
 
-      {shelters.length === 0 ? (
+      {filteredShelters.length === 0 ? (
         <div className="no-shelters">
-          <p>No hay protectoras disponibles en este momento.</p>
+          {searchTerm ? (
+            <p>No se encontraron protectoras con "{searchTerm}"</p>
+          ) : (
+            <p>No hay protectoras disponibles en este momento.</p>
+          )}
         </div>
       ) : (
         <SheltersList 
-          shelters={shelters}
+          shelters={filteredShelters}
           onUpdate={handleShelterUpdate}
         />
       )}
