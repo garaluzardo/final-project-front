@@ -17,6 +17,7 @@ import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import Navbar from "./components/Navbar/Navbar";
 import IsPrivate from "./components/IsPrivate/IsPrivate";
 import IsAnon from "./components/IsAnon/IsAnon";
+import Chatbot from "./components/Chatbot/Chatbot";
 
 function App() {
 
@@ -53,7 +54,7 @@ const excludeBackground = location.pathname === '/access';
           />
 
       </Routes>
-
+      <Chatbot />
       <ToastContainer 
         position="bottom-right"
         autoClose={3000}

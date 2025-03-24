@@ -403,7 +403,7 @@ const EditShelterForm = ({ shelter, onClose, onUpdate, onDelete, isDeleting }) =
               
               {/* Sección para eliminar protectora */}
               <div className="delete-shelter-section">
-                <h3>Zona de peligro</h3>
+            {/*     <h3>Zona de peligro</h3> */}
                 <p className="warning-text">
                   La eliminación de una protectora es irreversible. Se eliminarán todas las tareas, animales y
                   referencias asociadas a esta protectora.

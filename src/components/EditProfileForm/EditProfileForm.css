@@ -56,8 +56,9 @@
     transition: background-color 0.2s;
   }
   
-  .close-button {
-    color: #0f1419;
+  .close-form-button {
+    color: #190f0f;
+
   }
   
   .close-button:hover {

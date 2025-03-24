@@ -127,7 +127,7 @@ const EditProfileForm = ({ profile, onClose, onUpdate }) => {
       <div className="edit-profile-modal">
         <div className="edit-profile-header">
           <button 
-            className="close-button" 
+            className="close-form-button" 
             onClick={onClose}
             aria-label="Cancelar"
           >
