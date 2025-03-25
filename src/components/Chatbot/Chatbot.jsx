@@ -39,22 +39,22 @@ const Chatbot = () => {
     setIsLoading(true);
     
     try {
-      // Preparar historial para enviar (últimos 10 mensajes)
+ 
       const chatHistory = messages
-      .slice(-10)
-      .filter(msg => msg.sender === "user") // Solo enviar mensajes del usuario
-      .map(msg => ({
-        role: "user",
-        parts: [{ text: msg.text }]
-      }));
+        .slice(-10)
+        .filter(msg => msg.sender === "user")
+        .map(msg => ({
+          role: "user",
+          parts: [{ text: msg.text }]
+        }));
       
-      // Enviar mensaje al backend
+      // Envía el mensaje al back
       const response = await aiService.sendChatMessage(inputMessage, chatHistory);
       
-      // Añadir respuesta del bot
+      // Añade la respuesta del bot
       setMessages(prev => [...prev, {
         id: Date.now(),
-        text: response.data.response,
+        text: response.data.response || response.data,
         sender: "bot"
       }]);
     } catch (error) {
