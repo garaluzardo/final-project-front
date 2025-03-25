@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
 import './LandingPage.css';
@@ -16,15 +16,33 @@ const LandingPage = () => {
   // Estilos iniciales para ocultar elementos
   const hiddenStyle = { opacity: 0 };
 
+  // Callback para manejar el mouse enter
+  const handleMouseEnter = useCallback(() => {
+    if (buttonRef.current) {
+      gsap.to(buttonRef.current, { 
+        duration: 0.3, 
+        scale: 1.1,
+        boxShadow: "0 6px 12px rgba(0, 0, 0, 0.2)",
+        ease: "power1.out" 
+      });
+    }
+  }, []);
+
+  // Callback para manejar el mouse leave
+  const handleMouseLeave = useCallback(() => {
+    if (buttonRef.current) {
+      gsap.to(buttonRef.current, { 
+        duration: 0.3, 
+        scale: 1,
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.15)",
+        ease: "power1.out" 
+      });
+    }
+  }, []);
+
   useEffect(() => {
     // Crear timeline para animaciones secuenciales
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-    
-    // Ya no necesitamos establecer el estado inicial aquí ya que lo hacemos con CSS
-    // gsap.set([titleRef.current, subtitleRef.current, descriptionRef.current, ctaRef.current, buttonRef.current], { 
-    //   opacity: 0, 
-    //   y: 50 
-    // });
     
     // Secuencia de animaciones
     tl.to(titleRef.current, { 
@@ -59,35 +77,21 @@ const LandingPage = () => {
       scale: 1
     });
     
-    // Animación al pasar el cursor por encima del botón
-    if (buttonRef.current) {
-      buttonRef.current.addEventListener('mouseenter', () => {
-        gsap.to(buttonRef.current, { 
-          duration: 0.3, 
-          scale: 1.1,
-          boxShadow: "0 6px 12px rgba(0, 0, 0, 0.2)",
-          ease: "power1.out" 
-        });
-      });
-      
-      buttonRef.current.addEventListener('mouseleave', () => {
-        gsap.to(buttonRef.current, { 
-          duration: 0.3, 
-          scale: 1,
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.15)",
-          ease: "power1.out" 
-        });
-      });
+    // Agregar event listeners usando referencias estables
+    const currentButton = buttonRef.current;
+    if (currentButton) {
+      currentButton.addEventListener('mouseenter', handleMouseEnter);
+      currentButton.addEventListener('mouseleave', handleMouseLeave);
     }
     
     // Limpieza al desmontar
     return () => {
-      if (buttonRef.current) {
-        buttonRef.current.removeEventListener('mouseenter', () => {});
-        buttonRef.current.removeEventListener('mouseleave', () => {});
+      if (currentButton) {
+        currentButton.removeEventListener('mouseenter', handleMouseEnter);
+        currentButton.removeEventListener('mouseleave', handleMouseLeave);
       }
     };
-  }, []);
+  }, [handleMouseEnter, handleMouseLeave]);
 
   return (
     <div className="landing-container">
