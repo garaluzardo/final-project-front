@@ -27,7 +27,6 @@ const Chatbot = () => {
     
     if (!inputMessage.trim()) return;
     
-    // Añadir mensaje del usuario
     const userMessage = {
       id: Date.now(),
       text: inputMessage,
@@ -39,7 +38,6 @@ const Chatbot = () => {
     setIsLoading(true);
     
     try {
- 
       const chatHistory = messages
         .slice(-10)
         .filter(msg => msg.sender === "user")
@@ -48,10 +46,8 @@ const Chatbot = () => {
           parts: [{ text: msg.text }]
         }));
       
-      // Envía el mensaje al back
       const response = await aiService.sendChatMessage(inputMessage, chatHistory);
       
-      // Añade la respuesta del bot
       setMessages(prev => [...prev, {
         id: Date.now(),
         text: response.data.response || response.data,
@@ -59,11 +55,47 @@ const Chatbot = () => {
       }]);
     } catch (error) {
       console.error("Error al enviar mensaje:", error);
-      setMessages(prev => [...prev, {
-        id: Date.now(),
-        text: "Lo siento, ha ocurrido un error al procesar tu mensaje. Por favor, intenta de nuevo más tarde.",
-        sender: "bot"
-      }]);
+      
+      // Nuevos bloques de manejo de errores
+      if (error.response && error.response.data) {
+        const errorData = error.response.data;
+        
+        // Manejo de errores de validación
+        if (errorData.errors) {
+          const validationErrors = errorData.errors
+            .map(err => `${err.param}: ${err.message}`)
+            .join('\n');
+          
+          setMessages(prev => [...prev, {
+            id: Date.now(),
+            text: `Error de validación:\n${validationErrors}`,
+            sender: "bot"
+          }]);
+        } 
+        // Manejo de límite de tasa
+        else if (errorData.message === "Demasiadas solicitudes, por favor intenta de nuevo más tarde.") {
+          setMessages(prev => [...prev, {
+            id: Date.now(),
+            text: "Has alcanzado el límite de solicitudes. Por favor, espera un momento e inténtalo de nuevo.",
+            sender: "bot"
+          }]);
+        }
+        // Otros errores del servidor
+        else {
+          setMessages(prev => [...prev, {
+            id: Date.now(),
+            text: "Ocurrió un error al procesar tu mensaje.",
+            sender: "bot"
+          }]);
+        }
+      } else {
+        // Error de red u otro tipo de error
+        setMessages(prev => [...prev, {
+          id: Date.now(),
+          text: "Lo siento, no se pudo enviar el mensaje. Comprueba tu conexión.",
+          sender: "bot"
+        }]);
+      }
     } finally {
       setIsLoading(false);
     }
