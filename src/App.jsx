@@ -2,6 +2,7 @@ import "./App.css";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useContext } from "react";
 
 // Importar páginas
 import LandingPage from "./pages/LandingPage/LandingPage";
@@ -18,11 +19,13 @@ import Navbar from "./components/Navbar/Navbar";
 import IsPrivate from "./components/IsPrivate/IsPrivate";
 import IsAnon from "./components/IsAnon/IsAnon";
 import Chatbot from "./components/Chatbot/Chatbot";
+import { AuthContext } from "./context/auth.context";
 
 function App() {
 
 const location = useLocation();
 const excludeBackground = location.pathname === '/access';
+const { isLoggedIn } = useContext(AuthContext);
 
   return (
     <div className={`App ${excludeBackground ? 'no-background' : ''}`}>
@@ -54,7 +57,9 @@ const excludeBackground = location.pathname === '/access';
           />
 
       </Routes>
-      <Chatbot />
+
+      {isLoggedIn && <Chatbot />}
+
       <ToastContainer 
         position="bottom-right"
         autoClose={3000}
