@@ -13,6 +13,9 @@ La aplicación permite a los usuarios:
 - Unirse como voluntario a diferentes protectoras
 - Comunicarse con otros miembros y voluntarios (futura implementación)
 
+[!NOTE]
+Esta es la parte frontend del proyecto PETPAL. Para la API backend, visita el [repositorio backend](https://github.com/tu-usuario/petpal-backend).
+
 ## Contenido
 
 - [Características principales](#características-principales)
@@ -29,18 +32,21 @@ La aplicación permite a los usuarios:
 - **Perfiles personalizables**: Información personal, foto de perfil, ubicación y biografía.
 - **Descubrimiento de protectoras**: Búsqueda y exploración de protectoras por nombre o ubicación.
 - **Participación como voluntario**: Posibilidad de unirse a cualquier protectora como voluntario.
+- - **Visualización de tareas completadas**: Seguimiento de contribuciones personales.
 
 ### Para protectoras
 - **Creación de perfil**: Creación de página personalizada con información de contacto y ubicación.
 - **Gestión de animales**: Registro detallado de cada animal (estado, características, historial).
 - **Sistema de tareas**: Organización y seguimiento de tareas para voluntarios.
 - **Administración de voluntarios**: Control de acceso y asignación de roles.
+- **Tablón de tareas**: Sistema de organización con prioridades y categorías.
 
 ### Características técnicas
 - **Diseño responsive**: Funciona en dispositivos móviles, tablets y escritorio.
 - **Interfaz intuitiva**: Diseño moderno con retroalimentación visual para acciones.
 - **Sistema de permisos**: Roles diferenciados (administrador, voluntario) con acceso adecuado.
 - **Almacenamiento en la nube**: Posibilidad de almacenar imágenes de perfil y de animales.
+- **Asistente IA**: Chatbot integrado para resolver dudas comunes, proporcionar información sobre protectoras de animales y ayudar con funciones de la plataforma.
 
 ## Demo
 
@@ -54,6 +60,7 @@ La aplicación permite a los usuarios:
 - **Context API**: Gestión del estado (autenticación, datos)
 - **CSS personalizado**: Estilizado de componentes y diseño responsive
 - **Axios**: Cliente HTTP para comunicarse con la API
+- **Google Gemini API**: Integración de IA para el chatbot asistente
 
 ### Backend
 - **Node.js**: Entorno de ejecución para JavaScript
@@ -70,11 +77,11 @@ La aplicación permite a los usuarios:
 - **dotenv**: Gestión de variables de entorno
 - **Postman**: Pruebas de API
 - **MongoDB Atlas**: Hosting de base de datos
-- **Fly.io y Netlify**: Despliegue de aplicaciones
+- **Render y Netlify**: Despliegue de aplicaciones
 
 ## Estructura del proyecto
 
-El proyecto está dividido en dos repositorios principales:
+El proyecto está dividido en dos repositorios principales
 
 ### Repositorio Frontend
 ```
@@ -84,60 +91,65 @@ src/
 ├── assets/                  # Recursos estáticos (imágenes, fonts)
 ├── components/              # Componentes reutilizables
 │   ├── AnimalsList/         # Componente para listar animales
+│   ├── Chatbot/             # Asistente IA integrado
 │   ├── EditProfileForm/     # Formulario para editar perfiles
+│   ├── EditShelterForm/     # Formulario para editar protectoras
 │   ├── IsAnon/              # HOC para rutas de usuarios no autenticados
 │   ├── IsPrivate/           # HOC para rutas privadas
-│   ├── LandingBubbles/      # Componente visual para la página de inicio
-│   ├── LandingCarousel/     # Carrusel de imágenes para landing
-│   ├── LandingCounter/      # Contador de estadísticas
 │   ├── Loading/             # Componente de carga
-│   ├── Navbar/              # Barra de navegación
-│   ├── ShelterCard/         # Tarjeta de protectora
-│   ├── SheltersList/        # Lista de protectoras
-│   ├── Taskboard/           # Tablero de tareas
-│   └── VolunteersList/      # Lista de voluntarios
+│   └── Navbar/              # Barra de navegación
 ├── context/
 │   └── auth.context.jsx     # Contexto de autenticación
 ├── pages/                   # Páginas principales
 │   ├── AccessFormPage/      # Página de login/registro
 │   ├── CreateShelterPage/   # Creación de protectora
 │   ├── HomePage/            # Página principal
+│   │   └── components/      # Componentes específicos para HomePage
 │   ├── LandingPage/         # Página de bienvenida
+│   │   └── components/      # Componentes específicos para LandingPage
 │   ├── NotFoundPage/        # Error 404
 │   ├── ProfilePage/         # Perfil de usuario
+│   │   └── components/      # Componentes específicos para perfiles
 │   ├── ShelterProfilePage/  # Perfil de protectora
+│   │   └── components/      # Componentes específicos para protectoras
 │   └── SheltersPage/        # Explorador de protectoras
+│       └── components/      # Componentes para listado de protectoras
 └── services/                # Servicios para comunicación con API
+    ├── ai.service.js        # Servicio para chatbot IA
     ├── auth.service.js      # Servicio de autenticación
-    ├── example.service.js   # Servicio de ejemplo
     ├── shelter.service.js   # Servicios para protectoras
     ├── stats.service.js     # Servicios para estadísticas
+    ├── task.service.js      # Servicios para tareas
     └── user.service.js      # Servicios para usuarios
 ```
 
 ### Repositorio Backend
 ```
-├── app.js                   # Configuración principal Express
-├── server.js                # Punto de entrada del servidor
-├── config/                  # Configuración de Express
-├── db/                      # Conexión a la base de datos
-├── error-handling/          # Middleware de manejo de errores
-├── middleware/              # Middleware personalizado
-│   ├── jwt.middleware.js    # Middleware de autenticación JWT
-│   └── permissions.middleware.js # Control de permisos
-├── models/                  # Modelos de Mongoose
-│   ├── Animal.model.js      # Modelo para animales
-│   ├── Shelter.model.js     # Modelo para protectoras
-│   ├── Task.model.js        # Modelo para tareas
-│   └── User.model.js        # Modelo para usuarios
-└── routes/                  # Rutas de la API
-    ├── animal.routes.js     # Rutas para animales
-    ├── auth.routes.js       # Rutas de autenticación
-    ├── index.routes.js      # Rutas principales
-    ├── shelter.routes.js    # Rutas para protectoras
-    ├── stats.routes.js      # Rutas para estadísticas
-    ├── task.routes.js       # Rutas para tareas
-    └── user.routes.js       # Rutas para usuarios
+├── app.js                # Punto de entrada de la aplicación
+├── server.js             # Configuración del servidor
+├── db/                   # Conexión a la base de datos
+├── config/               # Configuraciones (CORS, middleware, etc.)
+│   └── ai.config.js      # Configuración para Gemini API
+├── models/               # Modelos de datos (Mongoose)
+│   ├── Animal.model.js   # Modelo para animales
+│   ├── Shelter.model.js  # Modelo para protectoras
+│   ├── Task.model.js     # Modelo para tareas
+│   └── User.model.js     # Modelo para usuarios
+├── routes/               # Rutas de la API
+│   ├── animal.routes.js  # Endpoints para animales
+│   ├── shelter.routes.js # Endpoints para protectoras
+│   ├── task.routes.js    # Endpoints para tareas
+│   ├── user.routes.js    # Endpoints para usuarios
+│   ├── auth.routes.js    # Endpoints para autenticación
+│   ├── stats.routes.js   # Endpoints para estadísticas
+│   └── ai.routes.js      # Endpoints para integración con IA
+├── middleware/           # Middlewares personalizados
+│   ├── jwt.middleware.js        # Validación de tokens JWT
+│   ├── permissions.middleware.js # Control de permisos
+│   └── ai.middleware.js         # Validación para IA
+├── services/             # Servicios externos
+│   └── ai.service.js     # Servicio para comunicación con Gemini API
+└── error-handling/       # Manejo de errores
 ```
 
 ## Uso
@@ -168,8 +180,14 @@ src/
 
 La API REST está organizada por recursos y sigue principios RESTful.
 
+## Flujo de trabajo
 
-```
+1. La aplicación comienza con una landing page para usuarios anónimos
+2. Los usuarios pueden registrarse o iniciar sesión
+3. Después de iniciar sesión, se presenta la página de inicio
+4. Desde allí, pueden acceder a su perfil, explorar protectoras o crear una nueva
+5. Al unirse a una protectora, pueden ver y completar tareas
+6. Durante toda la experiencia, los usuarios tienen acceso a un chatbot asistente de IA que puede responder preguntas sobre el uso de la plataforma, ofrecer orientación sobre protectoras de animales y proporcionar ayuda contextual
 
 ## Implementación y despliegue
 
@@ -180,7 +198,7 @@ El frontend está desplegado en [Netlify](https://netlify.com). La configuració
 - Integración continua desde GitHub
 
 ### Backend
-El backend está desplegado en [Fly.io](https://fly.io). La configuración incluye:
+El backend está desplegado en [Render](https://render.com). La configuración incluye:
 - Variables de entorno seguras
 - Conexión a MongoDB Atlas
 - Configuración CORS para permitir solicitudes desde el frontend
